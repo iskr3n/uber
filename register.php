@@ -24,7 +24,7 @@ if(!empty($_POST["register-user"])) {
     /* Email Validation */
     if(!isset($error_message)) {
         if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid Email Address";
+        $error_message = "Invalid Email Addresswaawawawa";
         }
     }
 
