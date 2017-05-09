@@ -7,13 +7,13 @@
 
     100% To use For Personal And Commercial Use.
     IN EXCHANGE JUST GIVE US CREDITS AND TELL YOUR FRIENDS ABOUT US
-   
+
     ========================================================  */
 
 
 
 /* ===========================================================
-   GENERAL STYLESHEET BY BYINARY THEME    
+   GENERAL STYLESHEET BY BYINARY THEME
    ============================================================*/
 
 
@@ -112,7 +112,7 @@ p {
 
 .color-brown {
     color: #EB8F2D;
-   
+
 }
 
 .color-black {
@@ -177,7 +177,7 @@ border: 1px solid #E9E9E9;
             border-bottom: 0;
         }
 
-   
+
         #pricing-section .plan-main.featured .plan-price {
             color: #fff;
             background-color: #242424;
@@ -212,14 +212,14 @@ border: 1px solid #E9E9E9;
     color: #cb2027;
 }
 /* ===========================================================
-   COMPONENT.CSS  CHANGES   
+   COMPONENT.CSS  CHANGES
    ============================================================*/
 .slideshow nav span.nav-prev, .slideshow nav span.nav-next {
 left: 33%!important;
 
 }
 .slideshow {
-    z-index: 1500!important; 
+    z-index: 1500!important;
 }
 .slideshow nav span.nav-close {
 color: #FF0000;
@@ -228,7 +228,7 @@ color: #FF0000;
         color: #FF0000;
     }
 /* ===========================================================
-   SLIDER ADJUSTMENTS (slider.css)  
+   SLIDER ADJUSTMENTS (slider.css)
    ============================================================*/
 
      .slidesjs-container {
@@ -239,7 +239,7 @@ color: #FF0000;
     padding:0px 0px 15px 0px;
 }
 /* ===========================================================
-   BOOTSTRAP ELEMENTS CHANGES   
+   BOOTSTRAP ELEMENTS CHANGES
    ============================================================*/
 .navbar {
     font-weight: 500;
@@ -281,4 +281,22 @@ color: #FF0000;
     background-color: #000;
     color: #fff;
     padding: 30px;
+}
+
+
+/* ==========================================================================
+   COSAS NUESTRAS
+   ========================================================================== */
+.bolamundo{
+  width: 33.33333333333333%;
+  float-right: 700px;
+  white-space: nowrap;
+  border-radius: 15px;
+  border: 2px solid #000000;
+  padding: 5px;
+  background-color: #878279;
+}
+.textobola{
+  font-size:20px;
+  
 }
