@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
+<!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
 <!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
@@ -17,13 +24,9 @@
     <title>Uber</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!--BOOTSTRAP MAIN STYLES -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!--FONTAWESOME MAIN STYLE -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-    <!--SLIDER CSS CLASES -->
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
-    <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -47,8 +50,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="login.html">INICIR SESIÓN</a></li>
-                    <li><a href="gallery.html">REGISTRO</a></li>
+                    <li><a href="viajar.html">VIAJAR</a></li>
+                    <li><a href="conducir.html">CONDUCIR</a></li>
+                    <li><a href="conducir.html">MODIFICAR DATOS</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
 
@@ -56,34 +61,114 @@
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-   
-    <div role="img" class="_style_3MzUKr" style="background-position: center center; background-image: url(https://critiquecism.files.wordpress.com/2016/02/uber-driver.jpg?w=720); background-repeat: no-repeat; background-size: cover; width: 100%; height: 300px;"></div>
 
-    <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-2 col-sm-2">
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+            
+            $retval = mysql_query( $sql, $con );
+   
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
+            
+             $row = mysql_fetch_assoc($retval);    
+
+              ?>
+
+
+
+
+<div class="container" style="margin-top: 120px">
+    <div class="row">
+        <div class="col-sm-2 col-md-2">
+            <div><a href="viajar.html">
+            <img src="http://icons.iconarchive.com/icons/icons-land/vista-map-markers/256/Map-Marker-Marker-Outside-Chartreuse-icon.png" alt="" class="img-rounded img-responsive" /></a>
+            <h3 style="text-align: center;">VIAJAR</h3>
             </div>
-            <div class="col-md-2 col-sm-2">
-                <div class="circle-body"></i><img src="assets/img/ride.png" style="width:120px;height:120px;"></div>
-                <h3>PASAJERO</h3>
-                <p>
-                    Gasta menos para llegar a tu destino. 
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-4">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/drive.png" style="margin-top:10px;width:120px;height:120px;"></div>
-                <h3>CONDUCTOR</h3>
-            </a>
-                <p>
-                    Conduce cuando queras, gana lo que necesitas.
-                </p>
+            <div><a href="conducir.html">
+            <img src="http://www.jcsdrivingschool.com.au/assets/images/icon-defensive-driving.png" alt="" class="img-rounded img-responsive" /></a>
+            <h3 style="text-align: center;">CONDUCIR</h3>
             </div>
         </div>
-    </div>
+        <div class="col-sm-1 col-md-1">
+          
+        </div>
+        <div class="col-sm-3 col-md-3">
+            <img style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            <blockquote style="margin-top: 20px">
+                <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p> 
+                <cite>Direccion</cite>
+                <small><cite title="Direccion"><?php echo $row['direccion']?>,<?php echo $row['localidad']?>, <?php echo $row['provincia']?>  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
+                <cite>Telefono</cite>
+                <small><cite title="Telefono"><?php echo $row['movil']?>  <i class="glyphicon-envelope"></i></cite></small>
+                <cite>Cumpleaños</cite>
+                <small><cite title="Telefono"><?php echo $row['f_nacimiento']?> <i class="glyphicon glyphicon-gift"></i> </cite></small> 
+            </blockquote>
+        </div>
+        <div class="col-sm-2 col-md-2"></div>
+        <div class="col-sm-2 col-md-2">
+                <div class="panel panel-primary text-center no-boder">
+                            <div class="panel-body">
+                                <h3>124</h3>
+                            </div>
+                            <div class="panel-footer back-footer-green">
+                                Viajes Pasajero
 
+                            </div>
+                        </div>
+               <div class="panel panel-primary text-center no-boder">
+                            <div class="panel-body">
+                                <h3>8457</h3>
+                            </div>
+                            <div class="panel-footer panel-red back-footer-green">
+                                Km Pasajero
+
+                            </div>
+                        </div>
+                <div class="panel panel-primary text-center no-boder" style="height: 50px">
+                    Más Datos
+                </div>
+        </div>
+        
+        <div class="col-sm-2 col-md-2">
+                <div class="panel panel-primary text-center no-boder">
+                            <div class="panel-body">
+                                <h3>3</h3>
+                            </div>
+                            <div class="panel-footer back-footer-green">
+                                Viajes Conductor
+
+                            </div>
+                        </div>
+                <div class="panel panel-primary text-center no-boder">
+                            <div class="panel-body">
+                                <h3>20</h3>
+                            </div>
+                            <div style="background: red" class="panel-footer panel-blue back-footer-green">
+                                Km Conductor
+
+                            </div>
+                        </div>
+                <div  class="panel panel-blue panel-widget ">
+                    <div class="row no-padding">
+                        <div class="col-lg-0 widget-left">Más Datos</div>
+                        
+                    </div>
+                </div>
+        </div>        
+    </div>
+</div>
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
