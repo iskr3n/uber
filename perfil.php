@@ -162,7 +162,7 @@
                         </div>
                 <div  class="panel panel-blue panel-widget ">
                     <div class="row no-padding">
-                        <div class="col-lg-0 widget-left">Más Datos</div>
+                        <div class="col-lg-0 widget-left">Más Datos de conductor</div>
                         
                     </div>
                 </div>
