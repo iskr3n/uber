@@ -75,14 +75,14 @@
                 die("No puede conectar a la BD");
             $ses =  $_SESSION['username'];
             $sql = "SELECT * from PERSONA where email like '$ses'";
-            
+
             $retval = mysql_query( $sql, $con );
-   
+
                if(! $retval ) {
                   die('Could not get data: ' . mysql_error());
                }
-            
-             $row = mysql_fetch_assoc($retval);    
+
+             $row = mysql_fetch_assoc($retval);
 
               ?>
 
@@ -102,18 +102,18 @@
             </div>
         </div>
         <div class="col-sm-1 col-md-1">
-          
+
         </div>
         <div class="col-sm-3 col-md-3">
             <img style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
             <blockquote style="margin-top: 20px">
-                <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p> 
+                <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p>
                 <cite>Direccion</cite>
                 <small><cite title="Direccion"><?php echo $row['direccion']?>,<?php echo $row['localidad']?>, <?php echo $row['provincia']?>  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
                 <cite>Telefono</cite>
                 <small><cite title="Telefono"><?php echo $row['movil']?>  <i class="glyphicon-envelope"></i></cite></small>
                 <cite>Cumpleaños</cite>
-                <small><cite title="Telefono"><?php echo $row['f_nacimiento']?> <i class="glyphicon glyphicon-gift"></i> </cite></small> 
+                <small><cite title="Telefono"><?php echo $row['f_nacimiento']?> <i class="glyphicon glyphicon-gift"></i> </cite></small>
             </blockquote>
         </div>
         <div class="col-sm-2 col-md-2"></div>
@@ -140,7 +140,7 @@
                     Más Datos
                 </div>
         </div>
-        
+
         <div class="col-sm-2 col-md-2">
                 <div class="panel panel-primary text-center no-boder">
                             <div class="panel-body">
@@ -157,16 +157,17 @@
                             </div>
                             <div style="background: red" class="panel-footer panel-blue back-footer-green">
                                 Km Conductor
+                                Conductor 1
 
                             </div>
                         </div>
                 <div  class="panel panel-blue panel-widget ">
                     <div class="row no-padding">
                         <div class="col-lg-0 widget-left">Más Datos</div>
-                        
+
                     </div>
                 </div>
-        </div>        
+        </div>
     </div>
 </div>
 
@@ -181,7 +182,7 @@
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-           
+
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>
