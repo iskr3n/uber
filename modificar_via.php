@@ -1,8 +1,3 @@
-
-<?
-   // error_reporting(E_ALL);
-   // ini_set("display_errors", 1);
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -11,6 +6,60 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
+
+<?php
+if(!empty($_POST["register-user"])) {
+    /* Form Required Field Validation */
+    foreach($_POST as $key=>$value) {
+        if(empty($_POST[$key])) {
+        $error_message = "All Fields are required";
+        break;
+        }
+    }
+    /* Password Matching Validation */
+    if($_POST['password'] != $_POST['confirm_password']){ 
+    $error_message = 'Passwords should be same<br>'; 
+    }
+
+    /* Email Validation */
+    if(!isset($error_message)) {
+        if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
+        $error_message = "Invalid Email Addresswaawawawa";
+        }
+    }
+
+    /* Validation to check if gender is selected */
+    if(!isset($error_message)) {
+    if(!isset($_POST["gender"])) {
+    $error_message = " All Fields are required";
+    }
+    }
+
+    /* Validation to check if Terms and Conditions are accepted */
+    if(!isset($error_message)) {
+        if(!isset($_POST["terms"])) {
+        $error_message = "Accept Terms and Conditions to Register";
+        }
+    }
+
+    if(!isset($error_message)) {
+        require_once("dbcontroller.php");
+        $db_handle = new DBController();
+        $query = "INSERT INTO registered_users (user_name, first_name, last_name, password, email, gender) VALUES
+        ('" . $_POST["userName"] . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . md5($_POST["password"]) . "', '" . $_POST["userEmail"] . "', '" . $_POST["gender"] . "')";
+        $result = $db_handle->insertQuery($query);
+        if(!empty($result)) {
+            $error_message = "";
+            $success_message = "You have registered successfully!"; 
+            unset($_POST);
+        } else {
+            $error_message = "Problem in registration. Try Again!"; 
+        }
+    }
+}
+?>
+ 
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,7 +68,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Uber</title>
+    <title>Bootstrap Mutipager Template - Maxop</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -30,28 +79,28 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
-    <style>
+        <style>
          body {
-            padding-top: 140px;
-            padding-bottom: 40px;
+            padding-top: 50px;
+            padding-bottom: 0px;
          }
-
+         
          .form-signin {
             max-width: 330px;
             padding: 15px;
             margin: 0 auto;
             color: black;
          }
-
+         
          .form-signin .form-signin-heading,
          .form-signin .checkbox {
             margin-bottom: 10px;
          }
-
+         
          .form-signin .checkbox {
             font-weight: normal;
          }
-
+         
          .form-signin .form-control {
             position: relative;
             height: auto;
@@ -61,25 +110,25 @@
             padding: 10px;
             font-size: 16px;
          }
-
+         
          .form-signin .form-control:focus {
             z-index: 2;
          }
-
+         
          .form-signin input[type="email"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
             border-color:#017572;
          }
-
+         
          .form-signin input[type="password"] {
             margin-bottom: 10px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-color:#017572;
          }
-
+         
          h2{
             text-align: center;
             color: black;
@@ -103,47 +152,87 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">UBER</a>
+                <a class="navbar-brand" href="#">UBER</a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                  <li><a>LOGIN</a></li>
-                </ul>
-            </div>
+          
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
+   
 
-
-      <h2>Iniciar sesión</h2>
-
-
-      <div class = "container form-signin">
-
-      </div> <!-- /container -->
-
-      <div class = "container">
-
-         <form class = "form-signin" role = "form"
-            action="login.php" method = "post">
-            <h4 class = "form-signin-heading" style ='color: red'><?php echo $msg; ?></h4>
-            <input type = "text" class = "form-control"
-               name = "username" placeholder = "Email"
-               required></br>
-            <input type = "password" class = "form-control"
-               name = "password" placeholder = "Contraseña" required>
-            <button class = "btn btn-lg btn-primary btn-block" type = "submit"
-               name = "login">Login</button>
-               ¿No tienes una cuenta? <a href = "register.php" tite = "Registrar">Regístrate
-         </a>
-
-         </form>
-
-         Click here to clean <a href = "logout.php" tite = "Logout">Session.
-         </a>
-      </div>
+<div class="container">
+    <h2 class="well">Registrar Usuario</h2>
+    <div class="col-lg-12 well">
+    <div class="row">
+                <form action="registroBD.php" method="post">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" type="text"  class="form-control">
+                        </div>  
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Nombre</label>
+                                <input name="nombre" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Apellidos</label>
+                                <input name="apellidos" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Fecha de nacimiento</label>
+                                <input name="fecha_n" type="text" class="form-control">
+                            </div>
+                        </div>                  
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input name="dir" type="text" class="form-control">
+                        </div>  
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Ciudad</label>
+                                <input name="ciudad" type="text" class="form-control">
+                            </div>  
+                            <div class="col-sm-4 form-group">
+                                <label>Provincia</label>
+                                <input name="prov" type="text" class="form-control">
+                            </div>  
+                            <div class="col-sm-4 form-group">
+                                <label>Codigo Postal</label>
+                                <input name="cp" type="text" class="form-control">
+                            </div>      
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>DNI/NIE/NIF</label>
+                                <input name="dni" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Telefono</label>
+                                <input name="telefono" type="text" class="form-control">
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Contraseña</label>
+                                <input name="password" type="password" class="form-control">
+                            </div>  
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Subir una foto</label>
+                                </span><input name="image" type="file" /></span>
+                            </div>  
+                        </div>  
+                    <button type="button" name="button_registro" class="btn btn-lg btn-info">Registrar</button>     
+                    </div>
+                    
+                </form> 
+                </div>
+    </div>
+    </div>
 
 
 
@@ -159,7 +248,7 @@
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-
+           
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>
