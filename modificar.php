@@ -8,54 +8,26 @@
 <!-- HEAD SECTION -->
 
 <?php
-if(!empty($_POST["register-user"])) {
-    /* Form Required Field Validation */
-    foreach($_POST as $key=>$value) {
-        if(empty($_POST[$key])) {
-        $error_message = "All Fields are required";
-        break;
-        }
-    }
-    /* Password Matching Validation */
-    if($_POST['password'] != $_POST['confirm_password']){
-    $error_message = 'Passwords should be same<br>';
-    }
+$name = $email  = $last_name = $fecha_n = "";
 
-    /* Email Validation */
-    if(!isset($error_message)) {
-        if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid Email Addresswaawawawa";
-        }
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST["nombre"];
+  $email = $_POST["email"];
+  $last_name = $_POST["apellidos"];
+  $fecha_n = $_POST["fecha_n"];
 
-    /* Validation to check if gender is selected */
-    if(!isset($error_message)) {
-    if(!isset($_POST["gender"])) {
-    $error_message = " All Fields are required";
-    }
-    }
+  $data = array($name, $email, $last_name, $fecha_n);
+  test_input($data);
+}
 
-    /* Validation to check if Terms and Conditions are accepted */
-    if(!isset($error_message)) {
-        if(!isset($_POST["terms"])) {
-        $error_message = "Accept Terms and Conditions to Register";
-        }
-    }
+function test_input($data) {
 
-    if(!isset($error_message)) {
-        require_once("dbcontroller.php");
-        $db_handle = new DBController();
-        $query = "INSERT INTO registered_users (user_name, first_name, last_name, password, email, gender) VALUES
-        ('" . $_POST["userName"] . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . md5($_POST["password"]) . "', '" . $_POST["userEmail"] . "', '" . $_POST["gender"] . "')";
-        $result = $db_handle->insertQuery($query);
-        if(!empty($result)) {
-            $error_message = "";
-            $success_message = "You have registered successfully!";
-            unset($_POST);
-        } else {
-            $error_message = "Problem in registration. Try Again!";
-        }
-    }
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
 }
 ?>
 
@@ -152,10 +124,14 @@ if(!empty($_POST["register-user"])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">UBER</a>
+                <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
-
-
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                </ul>
+            </div>
         </div>
     </div>
     <!--END NAV SECTION -->
@@ -166,7 +142,7 @@ if(!empty($_POST["register-user"])) {
     <h2 class="well">Modificar datos</h2>
     <div class="col-lg-12 well">
     <div class="row">
-                <form action="registroBD.php" method="post">
+                <form name="register-user" method="post">
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Email</label>
@@ -226,11 +202,21 @@ if(!empty($_POST["register-user"])) {
                                 </span><input name="image" type="file" /></span>
                             </div>
                         </div>
-                    <button type="button" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
+                    <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
                     </div>
 
                 </form>
                 </div>
+                <?php
+                  echo "<h2>Your Input:</h2>";
+                  echo $name;
+                  echo "<br>";
+                  echo $email;
+                  echo "<br>";
+                  echo $last_name;
+                  echo "<br>";
+                  echo $fecha_n;
+                ?>
     </div>
     </div>
 
@@ -295,8 +281,6 @@ if(!empty($_POST["register-user"])) {
                 2017 www.uber.es | All Right Reserved
             </div>
         </div>
-
-
     </div>
 
     <!--END FOOTER SECTION -->
@@ -305,24 +289,5 @@ if(!empty($_POST["register-user"])) {
     <script src="assets/js/jquery.js"></script>
     <!-- CORE BOOTSTRAP LIBRARY -->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!-- SLIDER SCRIPTS LIBRARY -->
-    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
-    <!-- CUSTOM SCRIPT-->
-    <script>
-        $(document).ready(function () {
-            $('#slides').slidesjs({
-                width: 940,
-                height: 528,
-                play: {
-                    active: true,
-                    auto: true,
-                    interval: 4000,
-                    swap: true
-                }
-            });
-        });
-
-    </script>
-
 </body>
 </html>

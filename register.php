@@ -17,8 +17,8 @@ if(!empty($_POST["register-user"])) {
         }
     }
     /* Password Matching Validation */
-    if($_POST['password'] != $_POST['confirm_password']){ 
-    $error_message = 'Passwords should be same<br>'; 
+    if($_POST['password'] != $_POST['confirm_password']){
+    $error_message = 'Passwords should be same<br>';
     }
 
     /* Email Validation */
@@ -50,15 +50,15 @@ if(!empty($_POST["register-user"])) {
         $result = $db_handle->insertQuery($query);
         if(!empty($result)) {
             $error_message = "";
-            $success_message = "You have registered successfully!"; 
+            $success_message = "You have registered successfully!";
             unset($_POST);
         } else {
-            $error_message = "Problem in registration. Try Again!"; 
+            $error_message = "Problem in registration. Try Again!";
         }
     }
 }
 ?>
- 
+
 
 <head>
     <meta charset="utf-8">
@@ -84,23 +84,23 @@ if(!empty($_POST["register-user"])) {
             padding-top: 50px;
             padding-bottom: 0px;
          }
-         
+
          .form-signin {
             max-width: 330px;
             padding: 15px;
             margin: 0 auto;
             color: black;
          }
-         
+
          .form-signin .form-signin-heading,
          .form-signin .checkbox {
             margin-bottom: 10px;
          }
-         
+
          .form-signin .checkbox {
             font-weight: normal;
          }
-         
+
          .form-signin .form-control {
             position: relative;
             height: auto;
@@ -110,25 +110,25 @@ if(!empty($_POST["register-user"])) {
             padding: 10px;
             font-size: 16px;
          }
-         
+
          .form-signin .form-control:focus {
             z-index: 2;
          }
-         
+
          .form-signin input[type="email"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
             border-color:#017572;
          }
-         
+
          .form-signin input[type="password"] {
             margin-bottom: 10px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-color:#017572;
          }
-         
+
          h2{
             text-align: center;
             color: black;
@@ -152,15 +152,15 @@ if(!empty($_POST["register-user"])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">UBER</a>
+                <a class="navbar-brand" href="index.html">UBER</a>
             </div>
-          
+
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-   
+
 
 <div class="container">
     <h2 class="well">Registrar Usuario</h2>
@@ -171,7 +171,7 @@ if(!empty($_POST["register-user"])) {
                         <div class="form-group">
                             <label>Email</label>
                             <input name="email" type="text"  class="form-control">
-                        </div>  
+                        </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Nombre</label>
@@ -185,24 +185,24 @@ if(!empty($_POST["register-user"])) {
                                 <label>Fecha de nacimiento</label>
                                 <input name="fecha_n" type="text" class="form-control">
                             </div>
-                        </div>                  
+                        </div>
                         <div class="form-group">
                             <label>Dirección</label>
                             <input name="dir" type="text" class="form-control">
-                        </div>  
+                        </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Ciudad</label>
                                 <input name="ciudad" type="text" class="form-control">
-                            </div>  
+                            </div>
                             <div class="col-sm-4 form-group">
                                 <label>Provincia</label>
                                 <input name="prov" type="text" class="form-control">
-                            </div>  
+                            </div>
                             <div class="col-sm-4 form-group">
                                 <label>Codigo Postal</label>
                                 <input name="cp" type="text" class="form-control">
-                            </div>      
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
@@ -212,24 +212,24 @@ if(!empty($_POST["register-user"])) {
                             <div class="col-sm-6 form-group">
                                 <label>Telefono</label>
                                 <input name="telefono" type="text" class="form-control">
-                            </div>  
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Contraseña</label>
                                 <input name="password" type="password" class="form-control">
-                            </div>  
+                            </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Subir una foto</label>
                                 </span><input name="image" type="file" /></span>
-                            </div>  
-                        </div>  
-                    <button type="button" name="button_registro" class="btn btn-lg btn-info">Registrar</button>     
+                            </div>
+                        </div>
+                    <button type="button" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
                     </div>
-                    
-                </form> 
+
+                </form>
                 </div>
     </div>
     </div>
@@ -248,7 +248,7 @@ if(!empty($_POST["register-user"])) {
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-           
+
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>

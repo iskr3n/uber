@@ -46,13 +46,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">UBER</a>
+                <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="viajar.html">VIAJAR</a></li>
                     <li><a href="conducir.html">CONDUCIR</a></li>
-                    <li><a href="conducir.html">MODIFICAR DATOS</a></li>
+                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
