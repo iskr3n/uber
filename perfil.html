@@ -46,7 +46,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">UBER</a>
+                <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -75,9 +75,9 @@
                 die("No puede conectar a la BD");
 
             $sql = 'SELECT nombre, email, contrasenya from PERSONA where email like 'im23@alu.ua.es'';
-            
+
             $retval = mysql_query( $sql, $con );
-   
+
                if(! $retval ) {
                   die('Could not get data: ' . mysql_error());
                }
@@ -89,7 +89,7 @@
 
 <div class="container" style="margin-top: 120px">
     <div class="row">
-        
+
         <div class="col-sm-3 col-md-3">
             <img src="http://thetransformedmale.files.wordpress.com/2011/06/bruce-wayne-armani.jpg"
             alt="" class="img-rounded img-responsive" />
@@ -98,7 +98,7 @@
             </blockquote>
         </div>
         <div class="col-sm-4 col-md-4">
-            
+
             <p> <i class="glyphicon glyphicon-envelope"></i> masterwayne@batman.com
                 <br
                 /> <i class="glyphicon glyphicon-globe"></i> www.bootsnipp.com
@@ -118,7 +118,7 @@
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-           
+
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>

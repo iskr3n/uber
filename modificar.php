@@ -1,10 +1,3 @@
-<?php
-   session_start();
-   if ($_SESSION["username"]=='') {
-    header('Location: index.html');
-   }
-
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -13,6 +6,32 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
+
+<?php
+$name = $email  = $last_name = $fecha_n = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST["nombre"];
+  $email = $_POST["email"];
+  $last_name = $_POST["apellidos"];
+  $fecha_n = $_POST["fecha_n"];
+
+  $data = array($name, $email, $last_name, $fecha_n);
+  test_input($data);
+}
+
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
+}
+?>
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -21,13 +40,72 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Uber</title>
+    <title>Bootstrap Mutipager Template - Maxop</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <!--BOOTSTRAP MAIN STYLES -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
+    <!--FONTAWESOME MAIN STYLE -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
+    <!--SLIDER CSS CLASES -->
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
+    <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
+        <style>
+         body {
+            padding-top: 50px;
+            padding-bottom: 0px;
+         }
+
+         .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+            color: black;
+         }
+
+         .form-signin .form-signin-heading,
+         .form-signin .checkbox {
+            margin-bottom: 10px;
+         }
+
+         .form-signin .checkbox {
+            font-weight: normal;
+         }
+
+         .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+         }
+
+         .form-signin .form-control:focus {
+            z-index: 2;
+         }
+
+         .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-color:#017572;
+         }
+
+         .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-color:#017572;
+         }
+
+         h2{
+            text-align: center;
+            color: black;
+         }
+      </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,126 +128,100 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="viajar.html">VIAJAR</a></li>
-                    <li><a href="conducir.html">CONDUCIR</a></li>
                     <li><a href="modificar.php">MODIFICAR DATOS</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
-
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <?php
-            $db_host='bbdd.dlsi.ua.es';
-            $db_user='gi_im23';
-            $db_pwd='.im23.';
-            $database='gi_uber';
-            $con=mysql_connect($db_host,$db_user,$db_pwd);
 
-            if(!$con)
-                die("No puede conectar a la BD");
-            if(!mysql_select_db($database))
-                die("No puede conectar a la BD");
-            $ses =  $_SESSION['username'];
-            $sql = "SELECT * from PERSONA where email like '$ses'";
-
-            $retval = mysql_query( $sql, $con );
-
-               if(! $retval ) {
-                  die('Could not get data: ' . mysql_error());
-               }
-
-             $row = mysql_fetch_assoc($retval);
-
-              ?>
-
-
-
-
-<div class="container" style="margin-top: 120px">
+<div class="container">
+    <h2 class="well">Modificar datos</h2>
+    <div class="col-lg-12 well">
     <div class="row">
-        <div class="col-sm-2 col-md-2">
-            <div><a href="viajar.html">
-            <img src="http://icons.iconarchive.com/icons/icons-land/vista-map-markers/256/Map-Marker-Marker-Outside-Chartreuse-icon.png" alt="" class="img-rounded img-responsive" /></a>
-            <h3 style="text-align: center;">VIAJAR</h3>
-            </div>
-            <div><a href="conducir.html">
-            <img src="http://www.jcsdrivingschool.com.au/assets/images/icon-defensive-driving.png" alt="" class="img-rounded img-responsive" /></a>
-            <h3 style="text-align: center;">CONDUCIR</h3>
-            </div>
-        </div>
-        <div class="col-sm-1 col-md-1">
-
-        </div>
-        <div class="col-sm-3 col-md-3">
-            <img style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
-            <blockquote style="margin-top: 20px">
-                <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p>
-                <cite>Direccion</cite>
-                <small><cite title="Direccion"><?php echo $row['direccion']?>,<?php echo $row['localidad']?>, <?php echo $row['provincia']?>  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
-                <cite>Telefono</cite>
-                <small><cite title="Telefono"><?php echo $row['movil']?>  <i class="glyphicon-envelope"></i></cite></small>
-                <cite>Cumpleaños</cite>
-                <small><cite title="Telefono"><?php echo $row['f_nacimiento']?> <i class="glyphicon glyphicon-gift"></i> </cite></small>
-            </blockquote>
-        </div>
-        <div class="col-sm-2 col-md-2"></div>
-        <div class="col-sm-2 col-md-2">
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3>124</h3>
+                <form name="register-user" method="post">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" type="text"  class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Nombre</label>
+                                <input name="nombre" type="text" class="form-control">
                             </div>
-                            <div class="panel-footer back-footer-green">
-                                Viajes Pasajero
-
+                            <div class="col-sm-4 form-group">
+                                <label>Apellidos</label>
+                                <input name="apellidos" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Fecha de nacimiento</label>
+                                <input name="fecha_n" type="text" class="form-control">
                             </div>
                         </div>
-               <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3>8457</h3>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input name="dir" type="text" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Ciudad</label>
+                                <input name="ciudad" type="text" class="form-control">
                             </div>
-                            <div class="panel-footer panel-red back-footer-green">
-                                Km Pasajero
-
+                            <div class="col-sm-4 form-group">
+                                <label>Provincia</label>
+                                <input name="prov" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Codigo Postal</label>
+                                <input name="cp" type="text" class="form-control">
                             </div>
                         </div>
-                <div class="panel panel-primary text-center no-boder" style="height: 50px">
-                    Más Datos
-                </div>
-        </div>
-
-        <div class="col-sm-2 col-md-2">
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3>3</h3>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>DNI/NIE/NIF</label>
+                                <input name="dni" type="text" class="form-control">
                             </div>
-                            <div class="panel-footer back-footer-green">
-                                Viajes Conductor
-
+                            <div class="col-sm-6 form-group">
+                                <label>Telefono</label>
+                                <input name="telefono" type="text" class="form-control">
                             </div>
                         </div>
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3>20</h3>
-                            </div>
-                            <div style="background: red" class="panel-footer panel-blue back-footer-green">
-                                Km Conductor
-
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Contraseña</label>
+                                <input name="password" type="password" class="form-control">
                             </div>
                         </div>
-                <div  class="panel panel-blue panel-widget ">
-                    <div class="row no-padding">
-
-                        <div class="col-lg-0 widget-left">Más Datos de conductor</div>
-
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Subir una foto</label>
+                                </span><input name="image" type="file" /></span>
+                            </div>
+                        </div>
+                    <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
                     </div>
+
+                </form>
                 </div>
-        </div>
+                <?php
+                  echo "<h2>Your Input:</h2>";
+                  echo $name;
+                  echo "<br>";
+                  echo $email;
+                  echo "<br>";
+                  echo $last_name;
+                  echo "<br>";
+                  echo $fecha_n;
+                ?>
     </div>
-</div>
+    </div>
+
+
+
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
@@ -229,8 +281,6 @@
                 2017 www.uber.es | All Right Reserved
             </div>
         </div>
-
-
     </div>
 
     <!--END FOOTER SECTION -->
@@ -239,24 +289,5 @@
     <script src="assets/js/jquery.js"></script>
     <!-- CORE BOOTSTRAP LIBRARY -->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!-- SLIDER SCRIPTS LIBRARY -->
-    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
-    <!-- CUSTOM SCRIPT-->
-    <script>
-        $(document).ready(function () {
-            $('#slides').slidesjs({
-                width: 940,
-                height: 528,
-                play: {
-                    active: true,
-                    auto: true,
-                    interval: 4000,
-                    swap: true
-                }
-            });
-        });
-
-    </script>
-
 </body>
 </html>
