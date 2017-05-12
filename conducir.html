@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -45,44 +46,52 @@
                 </button>
                 <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
-
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                  <li><a>CONDUCIR</a></li>
+                  <li><a href="modificar_con.php">DATOS PERSONALES</a></li>
+                  <li><a style ='color: red' href="logout.html">CERRAR SESÓN</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <div role="img" class="_style_3MzUKr" style="background-position: center center; background-image: url(https://critiquecism.files.wordpress.com/2016/02/uber-driver.jpg?w=720); background-repeat: no-repeat; background-size: cover; width: 100%; height: 300px;"></div>
 
-    <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-2 col-sm-2">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/ride.png" style="width:120px;height:120px;"></div>
-                <h3>PASAJERO</h3>
-            </a>
-                <p>
-                    Gasta menos para llegar a tu destino.
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-4">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/drive.png" style="margin-top:10px;width:120px;height:120px;"></div>
-                <h3>CONDUCTOR</h3>
-            </a>
-                <p>
-                    Conduce cuando queras, gana lo que necesitas.
-                </p>
-            </div>
-        </div>
+    <h2>Iniciar sesión</h2>
+
+
+    <div class = "container form-signin">
+
+    </div> <!-- /container -->
+
+    <div class = "container">
+
+       <form class = "form-signin" role = "form"
+          action="login.php" method = "post">
+          <h4 class = "form-signin-heading" style ='color: red'><?php echo $msg; ?></h4>
+          <input type = "text" class = "form-control"
+             name = "username" placeholder = "Email"
+             required></br>
+          <input type = "password" class = "form-control"
+             name = "password" placeholder = "Contraseña" required>
+          <button class = "btn btn-lg btn-primary btn-block" type = "submit"
+             name = "login">Login</button>
+             ¿No tienes una cuenta? <a href = "register.php" tite = "Registrar">Regístrate
+       </a>
+
+       </form>
+
+       Click here to clean <a href = "logout.php" tite = "Logout">Session.
+       </a>
     </div>
 
 
-    <div class="space-bottom"></div>
+
+
+  <div class="space-bottom"></div>
     <!--END HOME SECTION -->
     <!--FOOTER SECTION -->
 
