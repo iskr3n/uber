@@ -50,8 +50,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="viajar.html">VIAJAR</a></li>
-                    <li><a href="conducir.html">CONDUCIR</a></li>
+                    <li><a href="register_via.php">VIAJAR</a></li>
+                    <li><a href="register_con.php">CONDUCIR</a></li>
                     <li><a href="modificar.php">MODIFICAR DATOS</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
