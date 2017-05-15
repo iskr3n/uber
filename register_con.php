@@ -8,55 +8,48 @@
 <!-- HEAD SECTION -->
 
 <?php
-if(!empty($_POST["register-user"])) {
-    /* Form Required Field Validation */
-    foreach($_POST as $key=>$value) {
-        if(empty($_POST[$key])) {
-        $error_message = "All Fields are required";
-        break;
-        }
-    }
-    /* Password Matching Validation */
-    if($_POST['password'] != $_POST['confirm_password']){
-    $error_message = 'Passwords should be same<br>';
-    }
 
-    /* Email Validation */
-    if(!isset($error_message)) {
-        if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid Email Addresswaawawawa";
-        }
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $iban = $_POST["IBAN"];
+  $fecha_per = $_POST["f_permiso_circu"];
+  $disponibilidad = $_POST["disponibilidad"];
 
-    /* Validation to check if gender is selected */
-    if(!isset($error_message)) {
-    if(!isset($_POST["gender"])) {
-    $error_message = " All Fields are required";
-    }
-    }
+  //Email que hay que coger de la session_start
+  $email = 'nieveblanca@gmail.es';
 
-    /* Validation to check if Terms and Conditions are accepted */
-    if(!isset($error_message)) {
-        if(!isset($_POST["terms"])) {
-        $error_message = "Accept Terms and Conditions to Register";
-        }
-    }
+  $db_host='bbdd.dlsi.ua.es';
+  $db_user='gi_im23';
+  $db_pwd='.im23.';
+  $database='gi_uber';
+  $con=mysql_connect($db_host,$db_user,$db_pwd);
 
-    if(!isset($error_message)) {
-        require_once("dbcontroller.php");
-        $db_handle = new DBController();
-        $query = "INSERT INTO registered_users (user_name, first_name, last_name, password, email, gender) VALUES
-        ('" . $_POST["userName"] . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . md5($_POST["password"]) . "', '" . $_POST["userEmail"] . "', '" . $_POST["gender"] . "')";
-        $result = $db_handle->insertQuery($query);
-        if(!empty($result)) {
-            $error_message = "";
-            $success_message = "You have registered successfully!";
-            unset($_POST);
-        } else {
-            $error_message = "Problem in registration. Try Again!";
-        }
-    }
+  if(!$con)
+      die("No puede conectar a la BD");
+  if(!mysql_select_db($database))
+      die("No puede conectar a la BD");
+
+  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, disponibilidad, iban)
+   VALUES('$email', '$f_permiso_circu', '$disponibilidad', '$iban')";
+  $retval = mysql_query($sql, $con);
+  //echo('Insertado correctamente'.$retval);
+  //header('Location: login.html');
+  header('Location: conducir.html');
+
+  $data = array($iban, $fecha_per, $disponibilidad);
+  test_input($data);
 }
+
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
+}
+
+//header('Location: conducir.html');
 ?>
 
 
@@ -172,24 +165,24 @@ if(!empty($_POST["register-user"])) {
         <h2 class="well">Registrar conductor</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" method="post">
+                    <form name="register-user" action="register_con.php" method="post">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <!-- Modificar fecha per-->
                                     <label>Fecha permiso circulación</label>
-                                    <input name="fecha_per" type="text" class="form-control">
+                                    <input name="f_permiso_circu" type="text" class="form-control">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <!-- Aqui va la Disponibilidad del conductor-->
                                     <label>Disponibilidad</label>
                                     <input name="disponibilidad" type="text" class="form-control">
                                 </div>
-                                <div class="col-sm-12 form-group">
-                                    <label>IBAN</label>
-                                    <input name="iban" type="text" class="form-control">
-                                </div>
                             </div>
+                                <div class="form-group">
+                                    <label>IBAN</label>
+                                    <input name="IBAN" type="text" class="form-control">
+                                </div>
+
 
 
 

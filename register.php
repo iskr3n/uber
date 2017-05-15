@@ -8,54 +8,50 @@
 <!-- HEAD SECTION -->
 
 <?php
-if(!empty($_POST["register-user"])) {
-    /* Form Required Field Validation */
-    foreach($_POST as $key=>$value) {
-        if(empty($_POST[$key])) {
-        $error_message = "All Fields are required";
-        break;
-        }
-    }
-    /* Password Matching Validation */
-    if($_POST['password'] != $_POST['confirm_password']){
-    $error_message = 'Passwords should be same<br>';
-    }
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $email = $_POST['email'];
+  $nombre = $_POST['nombre'];
+  $apellidos = $_POST['apellidos'];
+  $fecha_nac = $_POST['fecha_n'];
+  $direccion = $_POST['dir'];
+  $ciudad = $_POST['ciudad'];
+  $provincia = $_POST['prov'];
+  $cod_post = $_POST['cp'];
+  $dni = $_POST['dni'];
+  $telefono = $_POST['telefono'];
+  $contrasenya = $_POST['password'];
+  //$email = $_POST['email'];
 
-    /* Email Validation */
-    if(!isset($error_message)) {
-        if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid Email Addresswaawawawa";
-        }
-    }
+  $db_host='bbdd.dlsi.ua.es';
+  $db_user='gi_im23';
+  $db_pwd='.im23.';
+  $database='gi_uber';
+  $con=mysql_connect($db_host,$db_user,$db_pwd);
 
-    /* Validation to check if gender is selected */
-    if(!isset($error_message)) {
-    if(!isset($_POST["gender"])) {
-    $error_message = " All Fields are required";
-    }
-    }
+  if(!$con)
+      die("No puede conectar a la BD");
+  if(!mysql_select_db($database))
+      die("No puede conectar a la BD");
 
-    /* Validation to check if Terms and Conditions are accepted */
-    if(!isset($error_message)) {
-        if(!isset($_POST["terms"])) {
-        $error_message = "Accept Terms and Conditions to Register";
-        }
-    }
+  $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, direccion,
+          localidad, provincia, cp, dni, movil, contrasenya) VALUES('$email', '$nombre', '$apellidos',
+          '$fecha_nac', '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya')";
+  $retval = mysql_query($sql, $con);
+  echo('Insertado correctamente'.$retval);
+  //header('Location: login.html');
+  $data = array($email, $nombre, $apellidos, $fecha_nac, $direccion, $ciudad, $provincia,
+        $cod_post, $dni, $telefono, $contrasenya);
+  test_input($data);
+}
 
-    if(!isset($error_message)) {
-        require_once("dbcontroller.php");
-        $db_handle = new DBController();
-        $query = "INSERT INTO registered_users (user_name, first_name, last_name, password, email, gender) VALUES
-        ('" . $_POST["userName"] . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . md5($_POST["password"]) . "', '" . $_POST["userEmail"] . "', '" . $_POST["gender"] . "')";
-        $result = $db_handle->insertQuery($query);
-        if(!empty($result)) {
-            $error_message = "";
-            $success_message = "You have registered successfully!";
-            unset($_POST);
-        } else {
-            $error_message = "Problem in registration. Try Again!";
-        }
-    }
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
 }
 ?>
 
@@ -167,9 +163,12 @@ if(!empty($_POST["register-user"])) {
         <h2 class="well">Registrar</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" method="post">
+                    <form name="register-user" action="register.php" method="post">
                         <div class="col-sm-12">
                             <div class="form-group">
+                                <!--<?php if (false) {
+                                  echo('<span>El email es obligatorio</span>');
+                                } ?>-->
                                 <label>Email</label>
                                 <input name="email" type="text"  class="form-control">
                             </div>
@@ -232,7 +231,7 @@ if(!empty($_POST["register-user"])) {
 
                     </form>
                     </div>
-            
+
         </div>
         </div>
 
