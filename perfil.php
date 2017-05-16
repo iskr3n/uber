@@ -50,14 +50,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="viajar.html">VIAJAR</a></li>
-<<<<<<< HEAD
+                     <li><a href="register_via.php">VIAJAR</a></li>
+                    <li><a href="register_con.php">CONDUCIR</a></li>
                     <li><a href="conducir.php">CONDUCIR</a></li>
-                    <li><a href="conducir.php">MODIFICAR DATOS</a></li>
-=======
-                    <li><a href="conducir.html">CONDUCIR</a></li>
                     <li><a href="modificar.php">MODIFICAR DATOS</a></li>
->>>>>>> origin/iskren
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
@@ -176,10 +172,6 @@
                             </div>
                             <div style="background: #7E63C3" class="panel-footer panel-blue back-footer-green">
                                 Km Conductor
-<<<<<<< HEAD
-=======
-
->>>>>>> origin/iskren
                             </div>
                         </div>
                 <div class="panel panel-primary text-center no-boder" style="background-color: #7E63C3; padding: 15px 0; border: 3px solid blue ; height: 50px">
