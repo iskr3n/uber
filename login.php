@@ -46,7 +46,13 @@
                   $sql2 = "UPDATE CONDUCTOR SET disponibilidad='DISPONIBLE' WHERE email like '$ses'";
                   $retval2 = mysql_query( $sql2, $con );
 
-                  header('Location: perfil.php');
+                  if($ses==admin){
+                  header('Location: menuadministrador.php');
+                  }
+                  else{
+                  header('Location: perfil.php');  
+                  }
+                  
                }else {
                   $msg = 'Username o Password estan incorrectos.';
                   header('Location: login.html');
