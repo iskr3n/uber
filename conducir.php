@@ -66,50 +66,66 @@
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-   
-<div class="container" style="margin-top: 120px">
-    <div class="row">
-    
-    </div>
-    <div class="row">
-        <div class="col-sm-4 col-md-4">
-            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
-            <blockquote style="margin-top: 20px">
-                <p>FORD</p>
-                <cite>Direccion</cite>
-                <small><cite>1</cite></small>
-                <cite>Telefono</cite>
-                <small><cite>1</cite></small>
-                <cite>Cumpleaños</cite>
-                <small><cite>1</cite></small>
-            </blockquote>
-        </div>
-           <div class="col-sm-4 col-md-4">
-            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
-            <blockquote style="margin-top: 20px">
-                <p>FORD</p>
-                <cite>Direccion</cite>
-                <small><cite>1</cite></small>
-                <cite>Telefono</cite>
-                <small><cite>1</cite></small>
-                <cite>Cumpleaños</cite>
-                <small><cite>1</cite></small>
-            </blockquote>
-        </div>
-           <div class="col-sm-4 col-md-4">
-            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
-            <blockquote style="margin-top: 20px">
-                <p>FORD</p>
-                <cite>Direccion</cite>
-                <small><cite>1</cite></small>
-                <cite>Telefono</cite>
-                <small><cite>1</cite></small>
-                <cite>Cumpleaños</cite>
-                <small><cite>1</cite></small>
-            </blockquote>
-        </div>
-    </div>
-</div>
+  
+
+ <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "select * from VEHICULO where email_conduc like '$ses'";
+
+            $retval = mysql_query( $sql, $con );
+
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
+
+             echo "<div class=\"container\" style=\"margin-top: 0px\"><h1 style=\"text-align: center;font-weight:normal;color:#000000;letter-spacing:7pt;word-spacing:3pt;font-size:49px;text-align:center;font-family:arial, helvetica, sans-serif;line-height:3;\">Mis coches</h1>
+                    <div class=\"row\">";
+
+                while($row = mysql_fetch_array($retval)){   //Creates a loop to loop through results
+                echo "<div class=\"col-sm-4 col-md-4\">
+                        <a href=\"conduciendo.php\"><div style=\"-moz-box-shadow:inset 0px 1px 0px 0px #9fb4f2;
+                        -webkit-box-shadow:inset 0px 1px 0px 0px #9fb4f2;box-shadow:inset 0px 1px 0px 0px #9fb4f2;
+                        background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #7892c2), color-stop(1, #476e9e));
+                        background:-moz-linear-gradient(top, #7892c2 5%, #476e9e 100%);background:-webkit-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+                        background:-o-linear-gradient(top, #7892c2 5%, #476e9e 100%);background:-ms-linear-gradient(top, #7892c2 5%, #476e9e 100%);
+                        background:linear-gradient(to bottom, #7892c2 5%, #476e9e 100%);
+                        filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#7892c2', endColorstr='#476e9e',GradientType=0);
+                        background-color:#7892c2;-moz-border-radius:6px;-webkit-border-radius:6px;border-radius:6px;border:1px solid #4e6096;display:inline-block;
+                         cursor:pointer;color:#ffffff;font-family:Arial;font-size:15px;font-weight:bold;padding:6px 146px;text-decoration:none;text-shadow:0px 1px 0px #283966;\">
+                            Conducir
+                        </div></a>
+                        <img style=\"height: 250px; width: 600px; margin-top: 10px\" src=\"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSRdUq5QHHd6IMV-aqD6yg4GRS8k7Lyi-hp5Gp3_SShjnznpDsf\" alt=\"\" class=\"img-rounded img-responsive\" />
+                        <blockquote style=\"margin-top: 20px\">
+                            <p>".$row['marca']." ".$row['modelo']."</p>
+                            <cite>Tipo</cite>
+                            <small><cite>".$row['tipo']."</cite></small>
+                            <cite>Matricula</cite>
+                            <small><cite>".$row['matricula']."</cite></small>
+                            <cite>Equipaje</cite>
+                            <small><cite>".$row['equipaje']."</cite></small>
+                            <cite>Año</cite>
+                            <small><cite>".$row['anyo']."</cite></small>
+                        </blockquote>
+                    </div>";  //$row['index'] the index here is a field name
+                
+
+
+                }
+
+                echo "</div></div>";
+
+              ?>
+
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
