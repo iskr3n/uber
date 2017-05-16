@@ -26,7 +26,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 <li><a href="">ESTADISTICAS</a></li>
-                <li><a href="">EXTRAER XML</a></li>
+                <li><a href="documento.xml">EXTRAER XML</a></li>
                 <li><a href="index.html">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
