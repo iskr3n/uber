@@ -8,19 +8,14 @@
 <!-- HEAD SECTION -->
 
 <?php
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $email = $_POST['email'];
-  $nombre = $_POST['nombre'];
-  $apellidos = $_POST['apellidos'];
-  $fecha_nac = $_POST['fecha_n'];
-  $direccion = $_POST['dir'];
-  $ciudad = $_POST['ciudad'];
-  $provincia = $_POST['prov'];
-  $cod_post = $_POST['cp'];
-  $dni = $_POST['dni'];
-  $telefono = $_POST['telefono'];
-  $contrasenya = $_POST['password'];
-  //$email = $_POST['email'];
+  $iban = $_POST["IBAN"];
+  $fecha_per = $_POST["f_permiso_circu"];
+  $disponibilidad = $_POST["disponibilidad"];
+
+  //Email que hay que coger de la session_start
+  $email = 'nieveblanca@gmail.es';
 
   $db_host='bbdd.dlsi.ua.es';
   $db_user='gi_im23';
@@ -33,14 +28,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, direccion,
-          localidad, provincia, cp, dni, movil, contrasenya) VALUES('$email', '$nombre', '$apellidos',
-          '$fecha_nac', '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya')";
+  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, disponibilidad, iban)
+   VALUES('$email', '$f_permiso_circu', '$disponibilidad', '$iban')";
   $retval = mysql_query($sql, $con);
-  echo('Insertado correctamente'.$retval);
+  //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  $data = array($email, $nombre, $apellidos, $fecha_nac, $direccion, $ciudad, $provincia,
-        $cod_post, $dni, $telefono, $contrasenya);
+  header('Location: conducir.html');
+
+  $data = array($iban, $fecha_per, $disponibilidad);
   test_input($data);
 }
 
@@ -53,6 +48,8 @@ function test_input($data) {
       }
   }
 }
+
+//header('Location: conducir.html');
 ?>
 
 
@@ -148,9 +145,14 @@ function test_input($data) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">UBER</a>
+                <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
-
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>REGISTRAR CONDUCTOR</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
@@ -160,72 +162,30 @@ function test_input($data) {
 
 
     <div class="container">
-        <h2 class="well">Registrar</h2>
+        <h2 class="well">Registrar conductor</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" action="register.php" method="post">
+                    <form name="register-user" action="register_con.php" method="post">
                         <div class="col-sm-12">
-                            <div class="form-group">
-                                <!--<?php if (false) {
-                                  echo('<span>El email es obligatorio</span>');
-                                } ?>-->
-                                <label>Email</label>
-                                <input name="email" type="text"  class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label>Nombre</label>
-                                    <input name="nombre" type="text" class="form-control">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Apellidos</label>
-                                    <input name="apellidos" type="text" class="form-control">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Fecha de nacimiento</label>
-                                    <input name="fecha_n" type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label>Dirección</label>
-                                <input name="dir" type="text" class="form-control">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label>Ciudad</label>
-                                    <input name="ciudad" type="text" class="form-control">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Provincia</label>
-                                    <input name="prov" type="text" class="form-control">
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Codigo Postal</label>
-                                    <input name="cp" type="text" class="form-control">
-                                </div>
-                            </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
-                                    <label>DNI/NIE/NIF</label>
-                                    <input name="dni" type="text" class="form-control">
+                                    <label>Fecha permiso circulación</label>
+                                    <input name="f_permiso_circu" type="text" class="form-control">
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <label>Telefono</label>
-                                    <input name="telefono" type="text" class="form-control">
+                                    <!-- Aqui va la Disponibilidad del conductor-->
+                                    <label>Disponibilidad</label>
+                                    <input name="disponibilidad" type="text" class="form-control">
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label>Contraseña</label>
-                                    <input name="password" type="password" class="form-control">
+                                <div class="form-group">
+                                    <label>IBAN</label>
+                                    <input name="IBAN" type="text" class="form-control">
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label>Subir una foto</label>
-                                    </span><input name="image" type="file" /></span>
-                                </div>
-                            </div>
+
+
+
+
                         <button type="submit" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
                         </div>
 
