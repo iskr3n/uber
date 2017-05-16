@@ -50,8 +50,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                     <li><a href="register_via.php">VIAJAR</a></li>
-                    <li><a href="register_con.php">CONDUCIR</a></li>
+                     <li><a href="comprobar_cliente.php">VIAJAR</a></li>
+                    <li><a href="comprobar_conductor.php">CONDUCIR</a></li>
                     <li><a href="conducir.php">CONDUCIR</a></li>
                     <li><a href="modificar.php">MODIFICAR DATOS</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
@@ -151,9 +151,9 @@
 
                             </div>
                         </div>
-                <div class="panel panel-primary text-center no-boder" style="background-color: #F77087; padding: 15px 0; border: 3px solid red ; height: 50px">
-                    Más Datos<a href=""></a>
-                </div>
+                <a href="conducir.php"><div class="panel panel-primary text-center no-boder" style="background-color: #F77087; padding: 15px 0; border: 3px solid red ; height: 50px">
+                    Más Datos
+                </div></a>
         </div>
 
         <div class="col-sm-2 col-md-2">
