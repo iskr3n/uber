@@ -1,3 +1,11 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -43,44 +51,65 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="perfil.php">UBER</a>
+                <a class="navbar-brand" href="index.html">UBER</a>
             </div>
-
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="viajar.html">VIAJAR</a></li>
+                    <li><a href="conducir.html">CONDUCIR</a></li>
+                    <li><a href="conducir.html">MODIFICAR DATOS</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-
-    <div role="img" class="_style_3MzUKr" style="background-position: center center; background-image: url(https://critiquecism.files.wordpress.com/2016/02/uber-driver.jpg?w=720); background-repeat: no-repeat; background-size: cover; width: 100%; height: 300px;"></div>
-
-    <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-2 col-sm-2">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/ride.png" style="width:120px;height:120px;"></div>
-                <h3>PASAJERO</h3>
-            </a>
-                <p>
-                    Gasta menos para llegar a tu destino.
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-4">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/drive.png" style="margin-top:10px;width:120px;height:120px;"></div>
-                <h3>CONDUCTOR</h3>
-            </a>
-                <p>
-                    Conduce cuando queras, gana lo que necesitas.
-                </p>
-            </div>
+   
+<div class="container" style="margin-top: 120px">
+    <div class="row">
+    
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-md-4">
+            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            <blockquote style="margin-top: 20px">
+                <p>FORD</p>
+                <cite>Direccion</cite>
+                <small><cite>1</cite></small>
+                <cite>Telefono</cite>
+                <small><cite>1</cite></small>
+                <cite>Cumpleaños</cite>
+                <small><cite>1</cite></small>
+            </blockquote>
+        </div>
+           <div class="col-sm-4 col-md-4">
+            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            <blockquote style="margin-top: 20px">
+                <p>FORD</p>
+                <cite>Direccion</cite>
+                <small><cite>1</cite></small>
+                <cite>Telefono</cite>
+                <small><cite>1</cite></small>
+                <cite>Cumpleaños</cite>
+                <small><cite>1</cite></small>
+            </blockquote>
+        </div>
+           <div class="col-sm-4 col-md-4">
+            <img style="height: 200px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            <blockquote style="margin-top: 20px">
+                <p>FORD</p>
+                <cite>Direccion</cite>
+                <small><cite>1</cite></small>
+                <cite>Telefono</cite>
+                <small><cite>1</cite></small>
+                <cite>Cumpleaños</cite>
+                <small><cite>1</cite></small>
+            </blockquote>
         </div>
     </div>
-
+</div>
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
@@ -93,7 +122,7 @@
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-
+           
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>

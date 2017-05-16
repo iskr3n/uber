@@ -1,8 +1,3 @@
-
-<?
-   // error_reporting(E_ALL);
-   // ini_set("display_errors", 1);
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -11,6 +6,32 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
+
+<?php
+$name = $email  = $last_name = $fecha_n = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $name = $_POST["nombre"];
+  $email = $_POST["email"];
+  $last_name = $_POST["apellidos"];
+  $fecha_n = $_POST["fecha_n"];
+
+  $data = array($name, $email, $last_name, $fecha_n);
+  test_input($data);
+}
+
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
+}
+?>
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -19,7 +40,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Uber</title>
+    <title>Bootstrap Mutipager Template - Maxop</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -30,10 +51,10 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
-    <style>
+        <style>
          body {
-            padding-top: 140px;
-            padding-bottom: 40px;
+            padding-top: 50px;
+            padding-bottom: 0px;
          }
 
          .form-signin {
@@ -107,43 +128,97 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a>LOGIN</a></li>
+                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
-
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
 
-      <h2>Iniciar sesión</h2>
+<div class="container">
+    <h2 class="well">Modificar datos</h2>
+    <div class="col-lg-12 well">
+    <div class="row">
+                <form name="register-user" method="post">
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input name="email" type="text"  class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Nombre</label>
+                                <input name="nombre" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Apellidos</label>
+                                <input name="apellidos" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Fecha de nacimiento</label>
+                                <input name="fecha_n" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Dirección</label>
+                            <input name="dir" type="text" class="form-control">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4 form-group">
+                                <label>Ciudad</label>
+                                <input name="ciudad" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Provincia</label>
+                                <input name="prov" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-4 form-group">
+                                <label>Codigo Postal</label>
+                                <input name="cp" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>DNI/NIE/NIF</label>
+                                <input name="dni" type="text" class="form-control">
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Telefono</label>
+                                <input name="telefono" type="text" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Contraseña</label>
+                                <input name="password" type="password" class="form-control">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Subir una foto</label>
+                                </span><input name="image" type="file" /></span>
+                            </div>
+                        </div>
+                    <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
+                    </div>
 
-
-      <div class = "container form-signin">
-
-      </div> <!-- /container -->
-
-      <div class = "container">
-
-         <form class = "form-signin" role = "form"
-            action="login.php" method = "post">
-            <h4 class = "form-signin-heading" style ='color: red'><?php echo $msg; ?></h4>
-            <input type = "text" class = "form-control"
-               name = "username" placeholder = "Email"
-               required></br>
-            <input type = "password" class = "form-control"
-               name = "password" placeholder = "Contraseña" required>
-            <button class = "btn btn-lg btn-primary btn-block" type = "submit"
-               name = "login">Login</button>
-               ¿No tienes una cuenta? <a href = "register.php" tite = "Registrar">Regístrate
-         </a>
-
-         </form>
-
-         Click here to clean <a href = "logout.php" tite = "Logout">Session.
-         </a>
-      </div>
+                </form>
+                </div>
+                <?php
+                  echo "<h2>Your Input:</h2>";
+                  echo $name;
+                  echo "<br>";
+                  echo $email;
+                  echo "<br>";
+                  echo $last_name;
+                  echo "<br>";
+                  echo $fecha_n;
+                ?>
+    </div>
+    </div>
 
 
 
@@ -206,8 +281,6 @@
                 2017 www.uber.es | All Right Reserved
             </div>
         </div>
-
-
     </div>
 
     <!--END FOOTER SECTION -->
@@ -216,24 +289,5 @@
     <script src="assets/js/jquery.js"></script>
     <!-- CORE BOOTSTRAP LIBRARY -->
     <script src="assets/js/bootstrap.min.js"></script>
-    <!-- SLIDER SCRIPTS LIBRARY -->
-    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
-    <!-- CUSTOM SCRIPT-->
-    <script>
-        $(document).ready(function () {
-            $('#slides').slidesjs({
-                width: 940,
-                height: 528,
-                play: {
-                    active: true,
-                    auto: true,
-                    interval: 4000,
-                    swap: true
-                }
-            });
-        });
-
-    </script>
-
 </body>
 </html>

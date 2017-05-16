@@ -6,6 +6,53 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
+
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $iban = $_POST["IBAN"];
+  $fecha_per = $_POST["f_permiso_circu"];
+  $disponibilidad = $_POST["disponibilidad"];
+
+  //Email que hay que coger de la session_start
+  $email = 'nieveblanca@gmail.es';
+
+  $db_host='bbdd.dlsi.ua.es';
+  $db_user='gi_im23';
+  $db_pwd='.im23.';
+  $database='gi_uber';
+  $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+  if(!$con)
+      die("No puede conectar a la BD");
+  if(!mysql_select_db($database))
+      die("No puede conectar a la BD");
+
+  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, disponibilidad, iban)
+   VALUES('$email', '$f_permiso_circu', '$disponibilidad', '$iban')";
+  $retval = mysql_query($sql, $con);
+  //echo('Insertado correctamente'.$retval);
+  //header('Location: login.html');
+  header('Location: conducir.html');
+
+  $data = array($iban, $fecha_per, $disponibilidad);
+  test_input($data);
+}
+
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
+}
+
+//header('Location: conducir.html');
+?>
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -14,7 +61,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Uber</title>
+    <title>Bootstrap Mutipager Template - Maxop</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -25,6 +72,61 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
+        <style>
+         body {
+            padding-top: 50px;
+            padding-bottom: 0px;
+         }
+
+         .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+            color: black;
+         }
+
+         .form-signin .form-signin-heading,
+         .form-signin .checkbox {
+            margin-bottom: 10px;
+         }
+
+         .form-signin .checkbox {
+            font-weight: normal;
+         }
+
+         .form-signin .form-control {
+            position: relative;
+            height: auto;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            padding: 10px;
+            font-size: 16px;
+         }
+
+         .form-signin .form-control:focus {
+            z-index: 2;
+         }
+
+         .form-signin input[type="email"] {
+            margin-bottom: -1px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+            border-color:#017572;
+         }
+
+         .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            border-color:#017572;
+         }
+
+         h2{
+            text-align: center;
+            color: black;
+         }
+      </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -45,44 +147,58 @@
                 </button>
                 <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
-
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>REGISTRAR CONDUCTOR</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                </ul>
+            </div>
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <div role="img" class="_style_3MzUKr" style="background-position: center center; background-image: url(https://critiquecism.files.wordpress.com/2016/02/uber-driver.jpg?w=720); background-repeat: no-repeat; background-size: cover; width: 100%; height: 300px;"></div>
+
 
     <div class="container">
-        <div class="row main-low-margin text-center">
-            <div class="col-md-2 col-sm-2">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/ride.png" style="width:120px;height:120px;"></div>
-                <h3>PASAJERO</h3>
-            </a>
-                <p>
-                    Gasta menos para llegar a tu destino.
-                </p>
-            </div>
-            <div class="col-md-4 col-sm-4">
-            </div>
-            <div class="col-md-2 col-sm-2">
-            <a href="login.php">
-                <div class="circle-body"></i><img src="assets/img/drive.png" style="margin-top:10px;width:120px;height:120px;"></div>
-                <h3>CONDUCTOR</h3>
-            </a>
-                <p>
-                    Conduce cuando queras, gana lo que necesitas.
-                </p>
-            </div>
+        <h2 class="well">Registrar conductor</h2>
+        <div class="col-lg-12 well">
+        <div class="row">
+                    <form name="register-user" action="register_con.php" method="post">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Fecha permiso circulación</label>
+                                    <input name="f_permiso_circu" type="text" class="form-control">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <!-- Aqui va la Disponibilidad del conductor-->
+                                    <label>Disponibilidad</label>
+                                    <input name="disponibilidad" type="text" class="form-control">
+                                </div>
+                            </div>
+                                <div class="form-group">
+                                    <label>IBAN</label>
+                                    <input name="IBAN" type="text" class="form-control">
+                                </div>
+
+
+
+
+                        <button type="submit" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
+                        </div>
+
+                    </form>
+                    </div>
+
         </div>
-    </div>
+        </div>
 
 
-    <div class="space-bottom"></div>
+
+
+        <div class="space-bottom"></div>
     <!--END HOME SECTION -->
     <!--FOOTER SECTION -->
 
