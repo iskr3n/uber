@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -6,60 +13,6 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
-
-<?php
-if(!empty($_POST["register-user"])) {
-    /* Form Required Field Validation */
-    foreach($_POST as $key=>$value) {
-        if(empty($_POST[$key])) {
-        $error_message = "All Fields are required";
-        break;
-        }
-    }
-    /* Password Matching Validation */
-    if($_POST['password'] != $_POST['confirm_password']){ 
-    $error_message = 'Passwords should be same<br>'; 
-    }
-
-    /* Email Validation */
-    if(!isset($error_message)) {
-        if (!filter_var($_POST["userEmail"], FILTER_VALIDATE_EMAIL)) {
-        $error_message = "Invalid Email Addresswaawawawa";
-        }
-    }
-
-    /* Validation to check if gender is selected */
-    if(!isset($error_message)) {
-    if(!isset($_POST["gender"])) {
-    $error_message = " All Fields are required";
-    }
-    }
-
-    /* Validation to check if Terms and Conditions are accepted */
-    if(!isset($error_message)) {
-        if(!isset($_POST["terms"])) {
-        $error_message = "Accept Terms and Conditions to Register";
-        }
-    }
-
-    if(!isset($error_message)) {
-        require_once("dbcontroller.php");
-        $db_handle = new DBController();
-        $query = "INSERT INTO registered_users (user_name, first_name, last_name, password, email, gender) VALUES
-        ('" . $_POST["userName"] . "', '" . $_POST["firstName"] . "', '" . $_POST["lastName"] . "', '" . md5($_POST["password"]) . "', '" . $_POST["userEmail"] . "', '" . $_POST["gender"] . "')";
-        $result = $db_handle->insertQuery($query);
-        if(!empty($result)) {
-            $error_message = "";
-            $success_message = "You have registered successfully!"; 
-            unset($_POST);
-        } else {
-            $error_message = "Problem in registration. Try Again!"; 
-        }
-    }
-}
-?>
- 
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -84,23 +37,23 @@ if(!empty($_POST["register-user"])) {
             padding-top: 50px;
             padding-bottom: 0px;
          }
-         
+
          .form-signin {
             max-width: 330px;
             padding: 15px;
             margin: 0 auto;
             color: black;
          }
-         
+
          .form-signin .form-signin-heading,
          .form-signin .checkbox {
             margin-bottom: 10px;
          }
-         
+
          .form-signin .checkbox {
             font-weight: normal;
          }
-         
+
          .form-signin .form-control {
             position: relative;
             height: auto;
@@ -110,25 +63,25 @@ if(!empty($_POST["register-user"])) {
             padding: 10px;
             font-size: 16px;
          }
-         
+
          .form-signin .form-control:focus {
             z-index: 2;
          }
-         
+
          .form-signin input[type="email"] {
             margin-bottom: -1px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
             border-color:#017572;
          }
-         
+
          .form-signin input[type="password"] {
             margin-bottom: 10px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;
             border-color:#017572;
          }
-         
+
          h2{
             text-align: center;
             color: black;
@@ -152,92 +105,76 @@ if(!empty($_POST["register-user"])) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">UBER</a>
+                <a class="navbar-brand" href="perfil.php">UBER</a>
             </div>
-          
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a>MODIFICAR DATOS CONDUCTOR</a></li>
+                    <li><a href="conducir.php">CONDUCIR</a></li>
+                    <li><a href="perfil.php">PERFIL</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
+                </ul>
+            </div>
+
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-   
 
-<div class="container">
-    <h2 class="well">Registrar Usuario</h2>
-    <div class="col-lg-12 well">
-    <div class="row">
-                <form action="registroBD.php" method="post">
-                    <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input name="email" type="text"  class="form-control">
-                        </div>  
-                        <div class="row">
-                            <div class="col-sm-4 form-group">
-                                <label>Nombre</label>
-                                <input name="nombre" type="text" class="form-control">
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from CONDUCTOR where email like '$ses'";
+
+            $retval = mysql_query( $sql, $con );
+
+            if(! $retval ) {
+               die('Could not get data: ' . mysql_error());
+            }
+
+            $row = mysql_fetch_assoc($retval);
+    ?>
+
+
+    <div class="container">
+        <h2 class="well">Modificar datos conductor</h2>
+        <div class="col-lg-12 well">
+        <div class="row">
+                    <form name="register-user" action="mod_dat_con.php" method="post">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Fecha permiso circulación</label>
+                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label>IBAN</label>
+                                    <input name="IBAN" type="text" class="form-control" value="<?php echo $row['iban']?>">
+                                </div>
                             </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Apellidos</label>
-                                <input name="apellidos" type="text" class="form-control">
-                            </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Fecha de nacimiento</label>
-                                <input name="fecha_n" type="text" class="form-control">
-                            </div>
-                        </div>                  
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <input name="dir" type="text" class="form-control">
-                        </div>  
-                        <div class="row">
-                            <div class="col-sm-4 form-group">
-                                <label>Ciudad</label>
-                                <input name="ciudad" type="text" class="form-control">
-                            </div>  
-                            <div class="col-sm-4 form-group">
-                                <label>Provincia</label>
-                                <input name="prov" type="text" class="form-control">
-                            </div>  
-                            <div class="col-sm-4 form-group">
-                                <label>Codigo Postal</label>
-                                <input name="cp" type="text" class="form-control">
-                            </div>      
+                        <button type="submit" name="button_registro" class="btn btn-lg btn-info" value="mod_dat_con.php">Guardar</button>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>DNI/NIE/NIF</label>
-                                <input name="dni" type="text" class="form-control">
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label>Telefono</label>
-                                <input name="telefono" type="text" class="form-control">
-                            </div>  
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Contraseña</label>
-                                <input name="password" type="password" class="form-control">
-                            </div>  
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Subir una foto</label>
-                                </span><input name="image" type="file" /></span>
-                            </div>  
-                        </div>  
-                    <button type="button" name="button_registro" class="btn btn-lg btn-info">Registrar</button>     
+
+                    </form>
                     </div>
-                    
-                </form> 
-                </div>
-    </div>
-    </div>
+
+        </div>
+        </div>
 
 
 
 
-    <div class="space-bottom"></div>
+        <div class="space-bottom"></div>
     <!--END HOME SECTION -->
     <!--FOOTER SECTION -->
 
@@ -248,7 +185,7 @@ if(!empty($_POST["register-user"])) {
                 <p>
                     Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
                 </p>
-           
+
             </div>
             <div class="col-md-4">
                 <h4>Necesitas ayuda? Contacta con nosotros. </h4>

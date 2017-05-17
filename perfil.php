@@ -52,9 +52,8 @@
                 <ul class="nav navbar-nav navbar-right">
                      <li><a href="comprobar_cliente.php">VIAJAR</a></li>
                     <li><a href="comprobar_conductor.php">CONDUCIR</a></li>
-                    <li><a href="conducir.php">CONDUCIR</a></li>
                     <li><a href="modificar.php">MODIFICAR DATOS</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
 
@@ -94,7 +93,7 @@
              $row = mysql_fetch_assoc($retval);
              $viajes = mysql_fetch_assoc($retval2);
              $drives = mysql_fetch_assoc($retval3);
-             $km_viajes = mysql_fetch_assoc($retval4);             
+             $km_viajes = mysql_fetch_assoc($retval4);
              $km_drives = mysql_fetch_assoc($retval5);
 
 
