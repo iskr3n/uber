@@ -121,54 +121,54 @@
                                   echo('<span>El email es obligatorio</span>');
                                 } ?>-->
                                 <label>Email</label>
-                                <input name="email" type="text"  class="form-control">
+                                <input name="email" type="text" placeholder="example@example.com" class="form-control">
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Nombre</label>
-                                    <input name="nombre" type="text" class="form-control">
+                                    <input name="nombre" type="text" placeholder="Pepe" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Apellidos</label>
-                                    <input name="apellidos" type="text" class="form-control">
+                                    <input name="apellidos" type="text" placeholder="Perez Perez" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Fecha de nacimiento</label>
-                                    <input name="fecha_n" type="text" class="form-control">
+                                    <input name="fecha_n" type="text" placeholder="1960-06-01" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>Dirección</label>
-                                <input name="dir" type="text" class="form-control">
+                                <input name="dir" type="text" placeholder="Avenida Alicante n1" class="form-control">
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Ciudad</label>
-                                    <input name="ciudad" type="text" class="form-control">
+                                    <input name="ciudad" type="text" placeholder="Alicante" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Provincia</label>
-                                    <input name="prov" type="text" class="form-control">
+                                    <input name="prov" type="text" placeholder="Alicante" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Codigo Postal</label>
-                                    <input name="cp" type="text" class="form-control">
+                                    <input name="cp" type="text" placeholder="03070" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>DNI/NIE/NIF</label>
-                                    <input name="dni" type="text" class="form-control">
+                                    <input name="dni" type="text" placeholder="12345678A" class="form-control">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Telefono</label>
-                                    <input name="telefono" type="text" class="form-control">
+                                    <input name="telefono" type="text" placeholder="666666666" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Contraseña</label>
-                                    <input name="password" type="password" class="form-control">
+                                    <input name="password" type="password" placeholder="example" class="form-control">
                                 </div>
                             </div>
                             <div class="row">

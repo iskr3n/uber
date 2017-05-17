@@ -109,8 +109,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>MODIFICAR DATOS CLIENTE</a></li>
+                    <li><a>MODIFICAR DATOS COCHE</a></li>
                     <li><a href="perfil.php">PERFIL</a></li>
+                    <li><a href="conducir.php">CONDUCIR</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
@@ -133,7 +134,7 @@
             if(!mysql_select_db($database))
                 die("No puede conectar a la BD");
             $ses =  $_SESSION['username'];
-            $sql = "SELECT * from CLIENTE where email like '$ses'";
+            $sql = "SELECT * from VEHICULO where email_conduc like '$ses'";
 
             $retval = mysql_query( $sql, $con );
 
@@ -146,26 +147,45 @@
 
 
     <div class="container">
-        <h2 class="well">Modificar datos cliente</h2>
+        <h2 class="well">Modificar datos coche</h2>
         <div class="col-lg-12 well">
-        <div class="row">
-                    <form name="register-user" action="modificar_via.php" method="post">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-12 form-group">
-                                    <label>Método de pago</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['m_pago']?>">
-                                </div>
-                            </div>
-                        <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
-                        </div>
+          <div class="row">
+              <div class="col-sm-4 form-group">
+                  <label>Matricula</label>
+                  <input name="matricula" type="text" class="form-control" value="<?php echo $row['matricula']?>">
+              </div>
+              <div class="col-sm-4 form-group">
+                  <label>Marca</label>
+                  <input name="marca" type="text" class="form-control" value="<?php echo $row['marca']?>">
+              </div>
+              <div class="col-sm-4 form-group">
+                  <label>Modelo</label>
+                  <input name="modelo" type="text" class="form-control" value="<?php echo $row['modelo']?>">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 form-group">
+                <label>Año</label>
+                <input name="anyo" type="text" class="form-control" value="<?php echo $row['anyo']?>">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label>Equipaje</label>
+                <input name="anyo" type="text" class="form-control" value="<?php echo $row['equipaje']?>">
+            </div>
+            <div class="col-sm-2 form-group">
+                <label>Plazas</label>
+                <input name="plaza" type="text" class="form-control" value="<?php echo $row['plaza']?>">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label>Tipo</label>
+                <input name="anyo" type="text" class="form-control" value="<?php echo $row['tipo']?>">
+            </div>
 
-                    </form>
-                    </div>
+            <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
+          </div>
 
         </div>
-        </div>
-
+      </div>
 
 
 

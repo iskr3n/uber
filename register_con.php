@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -12,10 +19,9 @@
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $iban = $_POST["IBAN"];
   $fecha_per = $_POST["f_permiso_circu"];
-  $disponibilidad = $_POST["disponibilidad"];
 
   //Email que hay que coger de la session_start
-  $email = 'nieveblanca@gmail.es';
+  $ses =  $_SESSION['username'];
 
   $db_host='bbdd.dlsi.ua.es';
   $db_user='gi_im23';
@@ -28,14 +34,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, disponibilidad, iban)
-   VALUES('$email', '$f_permiso_circu', '$disponibilidad', '$iban')";
+  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, iban)
+   VALUES('$ses', '$fecha_per', '$iban')";
   $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: conducir.html');
+  header('Location: conducir.php');
 
-  $data = array($iban, $fecha_per, $disponibilidad);
+  $data = array($iban, $fecha_per);
   test_input($data);
 }
 
@@ -150,7 +156,7 @@ function test_input($data) {
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a>REGISTRAR CONDUCTOR</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
 
@@ -170,18 +176,14 @@ function test_input($data) {
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control">
+                                    <input name="f_permiso_circu" type="text" placeholder="2010-06-17"  class="form-control">
                                 </div>
                                 <div class="col-sm-6 form-group">
-                                    <!-- Aqui va la Disponibilidad del conductor-->
-                                    <label>Disponibilidad</label>
-                                    <input name="disponibilidad" type="text" class="form-control">
+                                    <label>IBAN</label>
+                                    <input name="IBAN" type="text" placeholder="ES2234565456789098765344" class="form-control">
                                 </div>
                             </div>
-                                <div class="form-group">
-                                    <label>IBAN</label>
-                                    <input name="IBAN" type="text" class="form-control">
-                                </div>
+
 
 
 
