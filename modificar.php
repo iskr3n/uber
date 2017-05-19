@@ -110,7 +110,8 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
+                    <li><a>MODIFICAR DATOS</a></li>
+                    <li><a href="perfil.php">PERFIL</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
@@ -146,7 +147,7 @@
     <h2 class="well">Modificar datos</h2>
     <div class="col-lg-12 well">
     <div class="row">
-                <form name="register-user" action="modificar.php" method="post">
+                <form name="register-user" action="mod_persona.php" method="post">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">

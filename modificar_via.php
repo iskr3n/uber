@@ -149,12 +149,26 @@
         <h2 class="well">Modificar datos cliente</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" action="modificar_via.php" method="post">
+                    <form name="register-user" action="mod_dat_via.php" method="post">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-12 form-group">
                                     <label>Método de pago</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['m_pago']?>">
+                                    <select id="selectbasic" name="metodo_pago" class="form-control">
+                                      <option value ="<?php echo $row['m_pago']?>"><?php echo $row['m_pago']?></option>
+                                      <?php
+
+                                        switch ($row['m_pago']) {
+                                          case 'TARJETA DE CREDITO':
+                                            echo '<option value ="PAYPAL">PAYPAL</option>';
+                                            break;
+
+                                          case 'PAYPAL':
+                                          echo '<option value ="TARJETA DE CREDITO">TARJETA DE CREDITO</option>';
+                                            break;
+                                        }
+                                      ?>
+                                    </select>
                                 </div>
                             </div>
                         <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>

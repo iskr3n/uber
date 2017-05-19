@@ -9,8 +9,7 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $iban = $_POST["IBAN"];
-  $f_permiso_circu = $_POST["f_permiso_circu"];
+  $metodo_pago = $_POST["metodo_pago"];
 
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
@@ -26,15 +25,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "UPDATE CONDUCTOR SET f_permiso_circu='$f_permiso_circu', iban='$iban'
-   WHERE email='$ses'";
-  // $retval = var_dump($sql);die();
-  $retval = mysql_query($sql, $con);
+  //$imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
+  $sql = "UPDATE CLIENTE SET m_pago='$metodo_pago' WHERE email='$ses'";
+   //$retval = var_dump($sql);die();
+ $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: conducir.php');
+  header('Location: viajar.html');
 
-  $data = array($iban, $f_permiso_circu);
+  $data = array($metodo_pago);
   test_input($data);
 }
 
