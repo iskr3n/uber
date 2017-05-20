@@ -150,6 +150,7 @@
         <h2 class="well">Modificar datos coche</h2>
         <div class="col-lg-12 well">
           <div class="row">
+            <form name="register-user" action="mod_coche.php" method="post">
               <div class="col-sm-4 form-group">
                   <label>Matricula</label>
                   <input name="matricula" type="text" class="form-control" value="<?php echo $row['matricula']?>">
@@ -170,7 +171,27 @@
             </div>
             <div class="col-sm-4 form-group">
                 <label>Equipaje</label>
-                <input name="anyo" type="text" class="form-control" value="<?php echo $row['equipaje']?>">
+                <select id="selectbasic1" name="equipaje" class="form-control">
+                  <option value ="<?php echo $row['equipaje']?>"><?php echo $row['equipaje']?></option>
+                  <?php
+
+                    switch ($row['equipaje']) {
+                      case 'PEQUENYO':
+                        echo '<option value ="MEDIANO">MEDIANO</option>';
+                        echo  '<option value ="GRANDE">GRANDE</option>';
+                        break;
+
+                      case 'MEDIANO':
+                      echo '<option value ="PEQUENYO">PEQUEÑO</option>';
+                      echo  '<option value ="GRANDE">GRANDE</option>';
+                        break;
+                      case 'GRANDE':
+                      echo '<option value ="PEQUENYO">PEQUEÑO</option>';
+                      echo  '<option value ="MEDIANO">MEDIANO</option>';
+                        break;
+                    }
+                  ?>
+                </select>
             </div>
             <div class="col-sm-2 form-group">
                 <label>Plazas</label>
@@ -178,8 +199,36 @@
             </div>
             <div class="col-sm-4 form-group">
                 <label>Tipo</label>
-                <input name="anyo" type="text" class="form-control" value="<?php echo $row['tipo']?>">
-            </div>
+                <!-- <input name="tipo" type="text" class="form-control" value=""> -->
+                <select id="selectbasic2" name="tipo" class="form-control">
+                  <option value ="<?php echo $row['tipo']?>"><?php echo $row['tipo']?></option>
+                  <?php
+
+                    switch ($row['tipo']) {
+                      case 'UBER X':
+                        echo '<option value ="UBER XL">UBER XL</option>';
+                        echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                        break;
+
+                      case 'UBER XL':
+                      echo '<option value ="UBER X">UBER X</option>';
+                      echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                        break;
+                      case 'UBER BLACK':
+                      echo '<option value ="UBER X">UBER X</option>';
+                      echo  '<option value ="UBER XL">UBER XL</option>';
+                        break;
+                    }
+                  ?>
+                </select>
+
+              </div>
+              <div class="row">
+                  <div class="col-sm-6 form-group">
+                      <label>Subir una foto</label>
+                    </span><input name="image" type="file" value="<?php echo $row['imagen']?>"/></span>
+                  </div>
+              </div>
 
             <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
           </div>
@@ -209,19 +258,19 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Nombre">
+                                <input type="text" class="form-control" placeholder="Nombre">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Email">
+                                <input type="text" class="form-control" placeholder="Email">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea name="message" id="message" required="required" class="form-control" rows="3" placeholder="Pregunta"></textarea>
+                                <textarea name="message" id="message" class="form-control" rows="3" placeholder="Pregunta"></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Enviar</button>
