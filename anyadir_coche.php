@@ -23,8 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $anyo = $_POST["anyo"];
   $equipaje = $_POST["equipaje"];
   $plaza = $_POST["plaza"];
-  //$imagen = $_POST["imagen"];
-  //echo('Imagen' . $imagen );
+  $imagen = $_POST["imagen"];
   $tipo = $_POST["tipo"];
 
   //Email que hay que coger de la session_start
@@ -36,13 +35,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $database='gi_uber';
   $con=mysql_connect($db_host,$db_user,$db_pwd);
 
+  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
   if(!$con)
       die("No puede conectar a la BD");
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, email_conduc, tipo)
-   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', '$ses', '$tipo')";
+  $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
+   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
   //$retval = var_dump($sql);die();
   $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
@@ -202,7 +203,7 @@ function test_input($data) {
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Equipaje</label>
-                                  <select id="selectbasic" name="equipaje" class="form-control">
+                                  <select id="selectbasic1" name="equipaje" class="form-control">
                                     <option value ="PEQUENYO">PEQUEÑO</option>
                                     <option value ="MEDIANO">MEDIANO</option>
                                     <option value ="GRANDE">GRANDE</option>
@@ -214,7 +215,7 @@ function test_input($data) {
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Tipo</label>
-                                  <select id="selectbasic" name="tipo" class="form-control">
+                                  <select id="selectbasic2" name="tipo" class="form-control">
                                     <option value ="UBER X">UBER X</option>
                                     <option value ="UBER XL">UBER XL</option>
                                     <option value ="UBER BLACK">UBER BLACK</option>

@@ -9,8 +9,14 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $iban = $_POST["IBAN"];
-  $f_permiso_circu = $_POST["f_permiso_circu"];
+  $matricula = $_POST["matricula"];
+  $marca = $_POST["marca"];
+  $modelo = $_POST["modelo"];
+  $anyo = $_POST["anyo"];
+  $equipaje = $_POST["equipaje"];
+  $plaza = $_POST["plaza"];
+  $imagen = $_POST["imagen"];
+  $tipo = $_POST["tipo"];
 
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
@@ -26,15 +32,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "UPDATE CONDUCTOR SET f_permiso_circu='$f_permiso_circu', iban='$iban'
-   WHERE email='$ses'";
-  // $retval = var_dump($sql);die();
-  $retval = mysql_query($sql, $con);
+  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
+  $sql = "UPDATE VEHICULO SET matricula='$matricula', marca='$marca', modelo='$modelo',
+    anyo='$anyo', equipaje='$equipaje', plaza='$plaza', tipo='$tipo' imagen=$imagen WHERE email='$ses'";
+   //$retval = var_dump($sql);die();
+ $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
   header('Location: conducir.php');
 
-  $data = array($iban, $f_permiso_circu);
+  $data = array($matricula, $marca, $modelo, $anyo, $equipaje, $plaza, $tipo);
   test_input($data);
 }
 
