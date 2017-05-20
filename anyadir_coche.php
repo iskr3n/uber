@@ -13,6 +13,61 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
+
+<?php
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  $matricula = $_POST["matricula"];
+  $marca = $_POST["marca"];
+  $modelo = $_POST["modelo"];
+  $anyo = $_POST["anyo"];
+  $equipaje = $_POST["equipaje"];
+  $plaza = $_POST["plaza"];
+  $imagen = $_POST["imagen"];
+  $tipo = $_POST["tipo"];
+
+  //Email que hay que coger de la session_start
+  $ses =  $_SESSION['username'];
+
+  $db_host='bbdd.dlsi.ua.es';
+  $db_user='gi_im23';
+  $db_pwd='.im23.';
+  $database='gi_uber';
+  $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
+  if(!$con)
+      die("No puede conectar a la BD");
+  if(!mysql_select_db($database))
+      die("No puede conectar a la BD");
+
+  $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
+   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
+  //$retval = var_dump($sql);die();
+  $retval = mysql_query($sql, $con);
+  //echo('Insertado correctamente'.$retval);
+  //header('Location: login.html');
+  header('Location: conducir.php');
+
+  $data = array($matricula, $marca, $modelo, $anyo, $equipaje, $plaza, $tipo);
+  test_input($data);
+}
+
+function test_input($data) {
+
+  foreach ($data as $key => $value) {
+      if (empty($value)) {
+        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+        return;
+      }
+  }
+}
+
+//header('Location: conducir.html');
+?>
+
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -109,60 +164,73 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>MODIFICAR DATOS CONDUCTOR</a></li>
-                    <li><a href="conducir.php">CONDUCIR</a></li>
-                    <li><a href="perfil.php">PERFIL</a></li>
+                    <li><a>AÑADIR COCHE</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
-
 
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <?php
-            $db_host='bbdd.dlsi.ua.es';
-            $db_user='gi_im23';
-            $db_pwd='.im23.';
-            $database='gi_uber';
-            $con=mysql_connect($db_host,$db_user,$db_pwd);
-
-            if(!$con)
-                die("No puede conectar a la BD");
-            if(!mysql_select_db($database))
-                die("No puede conectar a la BD");
-            $ses =  $_SESSION['username'];
-            $sql = "SELECT * from CONDUCTOR where email like '$ses'";
-
-            $retval = mysql_query( $sql, $con );
-
-            if(! $retval ) {
-               die('Could not get data: ' . mysql_error());
-            }
-
-            $row = mysql_fetch_assoc($retval);
-    ?>
 
 
     <div class="container">
-        <h2 class="well">Modificar datos conductor</h2>
+        <h2 class="well">Registrar coche</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" action="mod_dat_con.php" method="post">
+                    <form name="register-user" action="anyadir_coche.php" method="post">
                         <div class="col-sm-12">
                             <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
+                                <div class="col-sm-4 form-group">
+                                    <label>Matricula</label>
+                                    <input name="matricula" type="text" placeholder="0000AAA"  class="form-control">
                                 </div>
-                                <div class="col-sm-6 form-group">
-                                    <label>IBAN</label>
-                                    <input name="IBAN" type="text" class="form-control" value="<?php echo $row['iban']?>">
+                                <div class="col-sm-4 form-group">
+                                    <label>Marca</label>
+                                    <input name="marca" type="text" placeholder="FORD" class="form-control">
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Modelo</label>
+                                    <input name="modelo" type="text" placeholder="FOCUS" class="form-control">
                                 </div>
                             </div>
-                        <button type="submit" name="button_registro" class="btn btn-lg btn-info" value="mod_dat_con.php">Guardar</button>
+                            <div class="row">
+                              <div class="col-sm-2 form-group">
+                                  <label>Año</label>
+                                  <input name="anyo" type="text" placeholder="2000"  class="form-control">
+                              </div>
+                              <div class="col-sm-4 form-group">
+                                  <label>Equipaje</label>
+                                  <select id="selectbasic1" name="equipaje" class="form-control">
+                                    <option value ="PEQUENYO">PEQUEÑO</option>
+                                    <option value ="MEDIANO">MEDIANO</option>
+                                    <option value ="GRANDE">GRANDE</option>
+                                  </select>
+                              </div>
+                              <div class="col-sm-2 form-group">
+                                  <label>Plazas</label>
+                                  <input name="plaza" type="text" placeholder="4" class="form-control">
+                              </div>
+                              <div class="col-sm-4 form-group">
+                                  <label>Tipo</label>
+                                  <select id="selectbasic2" name="tipo" class="form-control">
+                                    <option value ="UBER X">UBER X</option>
+                                    <option value ="UBER XL">UBER XL</option>
+                                    <option value ="UBER BLACK">UBER BLACK</option>
+                                  </select>
+                              </div>
+
+                                  <div class="col-sm-8 form-group">
+                                    <label>Subir una foto</label>
+                                    </span><input name="imagen" type="file" /></span>
+                                  </div>
+
+
+                            </div>
+
+                        <button type="submit" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
                         </div>
 
                     </form>

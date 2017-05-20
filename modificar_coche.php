@@ -109,9 +109,9 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>MODIFICAR DATOS CONDUCTOR</a></li>
-                    <li><a href="conducir.php">CONDUCIR</a></li>
+                    <li><a>MODIFICAR DATOS COCHE</a></li>
                     <li><a href="perfil.php">PERFIL</a></li>
+                    <li><a href="conducir.php">CONDUCIR</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
@@ -134,7 +134,7 @@
             if(!mysql_select_db($database))
                 die("No puede conectar a la BD");
             $ses =  $_SESSION['username'];
-            $sql = "SELECT * from CONDUCTOR where email like '$ses'";
+            $sql = "SELECT * from VEHICULO where email_conduc like '$ses'";
 
             $retval = mysql_query( $sql, $con );
 
@@ -147,30 +147,94 @@
 
 
     <div class="container">
-        <h2 class="well">Modificar datos conductor</h2>
+        <h2 class="well">Modificar datos coche</h2>
         <div class="col-lg-12 well">
-        <div class="row">
-                    <form name="register-user" action="mod_dat_con.php" method="post">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-6 form-group">
-                                    <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
-                                </div>
-                                <div class="col-sm-6 form-group">
-                                    <label>IBAN</label>
-                                    <input name="IBAN" type="text" class="form-control" value="<?php echo $row['iban']?>">
-                                </div>
-                            </div>
-                        <button type="submit" name="button_registro" class="btn btn-lg btn-info" value="mod_dat_con.php">Guardar</button>
-                        </div>
+          <div class="row">
+            <form name="register-user" action="mod_coche.php" method="post">
+              <div class="col-sm-4 form-group">
+                  <label>Matricula</label>
+                  <input name="matricula" type="text" class="form-control" value="<?php echo $row['matricula']?>">
+              </div>
+              <div class="col-sm-4 form-group">
+                  <label>Marca</label>
+                  <input name="marca" type="text" class="form-control" value="<?php echo $row['marca']?>">
+              </div>
+              <div class="col-sm-4 form-group">
+                  <label>Modelo</label>
+                  <input name="modelo" type="text" class="form-control" value="<?php echo $row['modelo']?>">
+              </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-2 form-group">
+                <label>Año</label>
+                <input name="anyo" type="text" class="form-control" value="<?php echo $row['anyo']?>">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label>Equipaje</label>
+                <select id="selectbasic1" name="equipaje" class="form-control">
+                  <option value ="<?php echo $row['equipaje']?>"><?php echo $row['equipaje']?></option>
+                  <?php
 
-                    </form>
-                    </div>
+                    switch ($row['equipaje']) {
+                      case 'PEQUENYO':
+                        echo '<option value ="MEDIANO">MEDIANO</option>';
+                        echo  '<option value ="GRANDE">GRANDE</option>';
+                        break;
+
+                      case 'MEDIANO':
+                      echo '<option value ="PEQUENYO">PEQUEÑO</option>';
+                      echo  '<option value ="GRANDE">GRANDE</option>';
+                        break;
+                      case 'GRANDE':
+                      echo '<option value ="PEQUENYO">PEQUEÑO</option>';
+                      echo  '<option value ="MEDIANO">MEDIANO</option>';
+                        break;
+                    }
+                  ?>
+                </select>
+            </div>
+            <div class="col-sm-2 form-group">
+                <label>Plazas</label>
+                <input name="plaza" type="text" class="form-control" value="<?php echo $row['plaza']?>">
+            </div>
+            <div class="col-sm-4 form-group">
+                <label>Tipo</label>
+                <!-- <input name="tipo" type="text" class="form-control" value=""> -->
+                <select id="selectbasic2" name="tipo" class="form-control">
+                  <option value ="<?php echo $row['tipo']?>"><?php echo $row['tipo']?></option>
+                  <?php
+
+                    switch ($row['tipo']) {
+                      case 'UBER X':
+                        echo '<option value ="UBER XL">UBER XL</option>';
+                        echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                        break;
+
+                      case 'UBER XL':
+                      echo '<option value ="UBER X">UBER X</option>';
+                      echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                        break;
+                      case 'UBER BLACK':
+                      echo '<option value ="UBER X">UBER X</option>';
+                      echo  '<option value ="UBER XL">UBER XL</option>';
+                        break;
+                    }
+                  ?>
+                </select>
+
+              </div>
+              <div class="row">
+                  <div class="col-sm-6 form-group">
+                      <label>Subir una foto</label>
+                    </span><input name="image" type="file" value="<?php echo $row['imagen']?>"/></span>
+                  </div>
+              </div>
+
+            <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
+          </div>
 
         </div>
-        </div>
-
+      </div>
 
 
 
@@ -194,19 +258,19 @@
                     <div class="row">
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Nombre">
+                                <input type="text" class="form-control" placeholder="Nombre">
                             </div>
                         </div>
                         <div class="col-md-6 col-sm-6">
                             <div class="form-group">
-                                <input type="text" class="form-control" required="required" placeholder="Email">
+                                <input type="text" class="form-control" placeholder="Email">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 col-sm-12">
                             <div class="form-group">
-                                <textarea name="message" id="message" required="required" class="form-control" rows="3" placeholder="Pregunta"></textarea>
+                                <textarea name="message" id="message" class="form-control" rows="3" placeholder="Pregunta"></textarea>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="btn btn-primary">Enviar</button>

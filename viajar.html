@@ -48,7 +48,7 @@ var geocoder = null;
 var addressMarker;
 
 function initialize() {
-if (GBrowserIsCompatible()) { 
+if (GBrowserIsCompatible()) {
 map = new GMap2(document.getElementById("mapa_ruta"));
 map.addControl(new GLargeMapControl());
 map.addControl(new GMapTypeControl());
@@ -56,10 +56,10 @@ gdir = new GDirections(map, document.getElementById("direcciones"));
 GEvent.addListener(gdir, "load", onGDirectionsLoad);
 GEvent.addListener(gdir, "error", handleErrors);
 
-setDirections("Alicante", "Calpe"); 
+setDirections("Alicante", "Calpe");
 
 }
-} 
+}
 
 function setDirections(fromAddress, toAddress) {
 gdir.load("from: " + fromAddress + " to: " + toAddress);
@@ -69,17 +69,17 @@ function handleErrors(){
 if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
 alert("Dirección no disponible.\nError code: " + gdir.getStatus().code);
 else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
-alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code); 
+alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code);
 else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
-alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code); 
+alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code);
 else if (gdir.getStatus().code == G_GEO_BAD_KEY)
 alert("The given key is either invalid or does not match the domain for which it was given. \n Error code: " + gdir.getStatus().code);
 else if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
-alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code); 
-else alert("An unknown error occurred."); 
+alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code);
+else alert("An unknown error occurred.");
 }
 
-function onGDirectionsLoad(){ 
+function onGDirectionsLoad(){
 }
 
 </script>
@@ -102,7 +102,7 @@ function onGDirectionsLoad(){
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                   <li><a>VIAJAR</a></li>
-                  <li><a href="modificar_via.php">DATOS PERSONALES</a></li>
+                  <li><a href="modificar_via.php">MODIFICAR DATOS</a></li>
                   <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
@@ -136,16 +136,16 @@ function onGDirectionsLoad(){
                 Destino: <input name="to" type="text" id="toAddress" size="25"/><br>
 
 
-              
+
                 </select>
                 <input type="submit" name="Submit" value="Buscar Viajes"/>
                 <div id="mapa_ruta" style="width: 1000px; height: 300px; border: 4px solid #FF6600;"></div>
-                <div id="direcciones" style="width: 710px"></div> 
+                <div id="direcciones" style="width: 710px"></div>
 
 
 
-                </form> 
-                
+                </form>
+
             </div>
         </div>
     </div>
