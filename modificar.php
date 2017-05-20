@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -6,31 +13,6 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
-
-<?php
-$name = $email  = $last_name = $fecha_n = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $name = $_POST["nombre"];
-  $email = $_POST["email"];
-  $last_name = $_POST["apellidos"];
-  $fecha_n = $_POST["fecha_n"];
-
-  $data = array($name, $email, $last_name, $fecha_n);
-  test_input($data);
-}
-
-function test_input($data) {
-
-  foreach ($data as $key => $value) {
-      if (empty($value)) {
-        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
-        return;
-      }
-  }
-}
-?>
-
 
 <head>
     <meta charset="utf-8">
@@ -137,69 +119,87 @@ function test_input($data) {
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+
+            $retval = mysql_query( $sql, $con );
+
+            if(! $retval ) {
+               die('Could not get data: ' . mysql_error());
+            }
+
+            $row = mysql_fetch_assoc($retval);
+    ?>
 
 <div class="container">
     <h2 class="well">Modificar datos</h2>
     <div class="col-lg-12 well">
     <div class="row">
-                <form name="register-user" method="post">
+                <form name="register-user" action="modificar.php" method="post">
                     <div class="col-sm-12">
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input name="email" type="text"  class="form-control">
-                        </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Nombre</label>
-                                <input name="nombre" type="text" class="form-control">
+                                <input name="nombre" type="text" class="form-control" value="<?php echo $row['nombre']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Apellidos</label>
-                                <input name="apellidos" type="text" class="form-control">
+                                <input name="apellidos" type="text" class="form-control" value="<?php echo $row['apellidos']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Fecha de nacimiento</label>
-                                <input name="fecha_n" type="text" class="form-control">
+                                <input name="fecha_n" type="text" class="form-control" value="<?php echo $row['f_nacimiento']?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Dirección</label>
-                            <input name="dir" type="text" class="form-control">
+                            <input name="dir" type="text" class="form-control" value="<?php echo $row['direccion']?>">
                         </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Ciudad</label>
-                                <input name="ciudad" type="text" class="form-control">
+                                <input name="ciudad" type="text" class="form-control" value="<?php echo $row['localidad']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Provincia</label>
-                                <input name="prov" type="text" class="form-control">
+                                <input name="prov" type="text" class="form-control" value="<?php echo $row['provincia']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Codigo Postal</label>
-                                <input name="cp" type="text" class="form-control">
+                                <input name="cp" type="text" class="form-control" value="<?php echo $row['cp']?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>DNI/NIE/NIF</label>
-                                <input name="dni" type="text" class="form-control">
+                                <input name="dni" type="text" class="form-control" value="<?php echo $row['dni']?>">
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Telefono</label>
-                                <input name="telefono" type="text" class="form-control">
+                                <input name="telefono" type="text" class="form-control" value="<?php echo $row['movil']?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Contraseña</label>
-                                <input name="password" type="password" class="form-control">
+                                <input name="password" type="password" class="form-control" value="<?php echo $row['contrasenya']?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Subir una foto</label>
-                                </span><input name="image" type="file" /></span>
+                              </span><input name="image" type="file" value="<?php echo $row['imagen']?>"/></span>
                             </div>
                         </div>
                     <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
@@ -207,16 +207,7 @@ function test_input($data) {
 
                 </form>
                 </div>
-                <?php
-                  echo "<h2>Your Input:</h2>";
-                  echo $name;
-                  echo "<br>";
-                  echo $email;
-                  echo "<br>";
-                  echo $last_name;
-                  echo "<br>";
-                  echo $fecha_n;
-                ?>
+
     </div>
     </div>
 

@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: index.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -13,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $metodo_pago = $_POST["metodo_pago"];
 
   //Email que hay que coger de la session_start
-  $email = 'amp129@alu.ua.es';
+  $ses =  $_SESSION['username'];
 
   $db_host='bbdd.dlsi.ua.es';
   $db_user='gi_im23';
@@ -27,7 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("No puede conectar a la BD");
 
   $sql = "INSERT INTO CLIENTE(email, m_pago)
-   VALUES('$email', '$metodo_pago')";
+   VALUES('$ses', '$metodo_pago')";
   $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
@@ -154,7 +161,7 @@ function test_input($data) {
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a>REGISTRAR VIAJERO</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
 
@@ -173,8 +180,18 @@ function test_input($data) {
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-12 form-group">
-                                    <label>Método de pago</label>
-                                    <input name="metodo_pago" type="text" class="form-control">
+                                    <form class="form-horizontal">
+                                    <div class="form-group">
+                                      <label class="col-sm-12 control-label" for="selectbasic">Método de pago</label>
+                                      <div class="col-sm-12">
+                                        <select id="selectbasic" name="metodo_pago" class="form-control">
+                                          <option value ="TARJETA DE CREDITO">TARJETA DE CREDITO</option>
+                                          <option value ="PAYPAL">PAYPAL</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    </form>
+                                  <!--  <input name="metodo_pago" type="text" class="form-control">-->
                                 </div>
                             </div>
                         <button type="submit" name="button_registro" class="btn btn-lg btn-info">Registrar</button>
@@ -185,9 +202,6 @@ function test_input($data) {
 
         </div>
         </div>
-
-
-
 
         <div class="space-bottom"></div>
     <!--END HOME SECTION -->
