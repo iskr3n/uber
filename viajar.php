@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: viajar.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -112,6 +119,106 @@ function onGDirectionsLoad(){
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
+        <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+            $sql2 = "
+            SELECT count(destino_direccion) as num_viajes_dir, count(destino_localidad) as num_viajes_loc,destino_direccion, destino_localidad, provincia, 
+            FROM LUGARES, VIAJE 
+            WHERE direccion = destino_direccion and destino_localidad=localidad
+            GROUP BY destino_direccion, destino_localidad   
+            ORDER BY destino_direccion DESC 
+            LIMIT 10";
+
+
+            $retval = mysql_query( $sql, $con );
+            $retval2 = mysql_query( $sql2, $con );
+
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
+
+             $row = mysql_fetch_assoc($retval);
+;
+             $localidad_usada = mysql_fetch_assoc($retval2);             
+
+
+
+
+              ?>
+
+
+
+
+<div class="container" style="margin-top: 120px">
+    <div class="row">
+
+
+        <div class="col-sm-2 col-md-2">
+
+               <div style="width: 450px;" class="panel panel-primary text-center no-boder">
+                           <div style="height: 80px; padding-top: 30px;" class="textodonde" class="panel-footer panel-red back-footer-green">
+                                Destinos más Visitados
+
+                            </div> 
+                            <div style="width: 450px" class="panel-body" >
+                                <h3><?php echo $localidad_usada['destino_localidad']?></h3>
+                            </div>
+
+                </div>
+
+        </div>
+
+        <div style="padding-left: 350px" class="col-sm-2 col-md-2">
+             <div style="padding-left: 100px;" class="bolamundo">
+                  <p class="textodonde">¿DONDE QUIERES IR?
+                  <img src="http://www.skyonline.es/wp-content/uploads/2014/10/bola-mundo.png" class="bola" width="15%" alt="Responsive image"></p>
+                
+                </div>
+                <br>
+                <form action="#" onsubmit="setDirections(this.from.value, this.to.value); return false" name="form">
+
+                Origen: <input type="text" size="25" id="fromAddress" name="from"/><br><br>
+
+                Destino: <input name="to" type="text" id="toAddress" size="25"/><br>
+
+
+              
+                </select>
+                <br>
+                <input type="submit" name="Submit" value="Buscar Viajes" style="font-color: #333;
+                background-color: #d5d5d5; width: 150px; height: 30px; letter-spacing: .05em; font-weight: bold;                "/>
+                <br>
+                <br>
+                <div id="mapa_ruta" style="width: 650px; height: 300px; border: 4px solid #333;"></div>
+                <div id="direcciones" style="width: 650px"></div> 
+
+
+
+                </form> 
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
     <div class="container" style="margin-top: 120px">
         <div class="row">
 
@@ -124,32 +231,7 @@ function onGDirectionsLoad(){
                     ¿Dónde quieres ir?
                 </h2> -->
 
-                <div class="bolamundo">
-                  <p class="textodonde">¿DONDE QUIERES IR?
-                  <img src="http://www.skyonline.es/wp-content/uploads/2014/10/bola-mundo.png" class="bola" width="15%" alt="Responsive image"></p>
-                
-                </div>
-                <br>
-                <form action="#" onsubmit="setDirections(this.from.value, this.to.value); return false" name="form">
-
-                Origen: <input type="text" size="25" id="fromAddress" name="from"/>
-
-                Destino: <input name="to" type="text" id="toAddress" size="25"/><br>
-
-
-              
-                </select>
-                <br>
-                <input type="submit" name="Submit" value="Buscar Viajes" style="font-color: #333;
-                background-color: #d5d5d5; width: 150px; height: 30px; letter-spacing: .05em; font-weight: bold;                "/>
-                <br>
-                <br>
-                <div id="mapa_ruta" style="width: 1000px; height: 300px; border: 4px solid #333;"></div>
-                <div id="direcciones" style="width: 710px"></div> 
-
-
-
-                </form> 
+               
                 
             </div>
         </div>

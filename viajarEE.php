@@ -1,3 +1,10 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+    header('Location: viajar.html');
+   }
+
+?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -17,13 +24,9 @@
     <title>Uber</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!--BOOTSTRAP MAIN STYLES -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!--FONTAWESOME MAIN STYLE -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-    <!--SLIDER CSS CLASES -->
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
-    <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -31,63 +34,9 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-
-    <script src="http://maps.google.com/maps?file=api&amp;v=2&oe=ISO-8859-1;&amp;key=AIzaSyCRy7L6o0UU06-sluTlgHSG40gn2OSKSk0&oe=ISO-8859-1"
-type="text/javascript"></script>
-
-
-
-
-
-
-    <script type="text/javascript">
-
-var map;
-var gdir;
-var geocoder = null;
-var addressMarker;
-
-function initialize() {
-if (GBrowserIsCompatible()) { 
-map = new GMap2(document.getElementById("mapa_ruta"));
-map.addControl(new GLargeMapControl());
-map.addControl(new GMapTypeControl());
-gdir = new GDirections(map, document.getElementById("direcciones"));
-GEvent.addListener(gdir, "load", onGDirectionsLoad);
-GEvent.addListener(gdir, "error", handleErrors);
-
-setDirections("Alicante", "Calpe"); 
-
-}
-} 
-
-function setDirections(fromAddress, toAddress) {
-gdir.load("from: " + fromAddress + " to: " + toAddress);
-}
-
-function handleErrors(){
-if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
-alert("Dirección no disponible.\nError code: " + gdir.getStatus().code);
-else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
-alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code); 
-else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
-alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code); 
-else if (gdir.getStatus().code == G_GEO_BAD_KEY)
-alert("The given key is either invalid or does not match the domain for which it was given. \n Error code: " + gdir.getStatus().code);
-else if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
-alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code); 
-else alert("An unknown error occurred."); 
-}
-
-function onGDirectionsLoad(){ 
-}
-
-</script>
-
-
 </head>
 <!--END HEAD SECTION -->
-<body onload="initialize()" onunload="GUnload()">
+<body>
     <!-- NAV SECTION -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -112,48 +61,69 @@ function onGDirectionsLoad(){
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <div class="container" style="margin-top: 120px">
-        <div class="row">
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
 
-            <!--<div class="col-sm-3 col-md-3">-->
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+            $sql2 = "select count(*) c from VIAJE where email_conduc like '$ses'";
+            $sql3 = "select count(*) c from VIAJE where email_cli like '$ses'";
+            $sql4 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_conduc like '$ses'";
+            $sql5 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_cli like '$ses'";
 
-          </div>
-            <!--<div class="col-sm-12 col-md-12">-->
+            $retval = mysql_query( $sql, $con );
+            $retval2 = mysql_query( $sql2, $con );
+            $retval3 = mysql_query( $sql3, $con );
+            $retval4 = mysql_query( $sql4, $con );
+            $retval5 = mysql_query( $sql5, $con );
 
-                <!--<h2 style="">
-                    ¿Dónde quieres ir?
-                </h2> -->
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
 
-                <div class="bolamundo">
-                  <p class="textodonde">¿DONDE QUIERES IR?
-                  <img src="http://www.skyonline.es/wp-content/uploads/2014/10/bola-mundo.png" class="bola" width="15%" alt="Responsive image"></p>
-                
-                </div>
-                <br>
-                <form action="#" onsubmit="setDirections(this.from.value, this.to.value); return false" name="form">
-
-                Origen: <input type="text" size="25" id="fromAddress" name="from"/>
-
-                Destino: <input name="to" type="text" id="toAddress" size="25"/><br>
-
-
-              
-                </select>
-                <br>
-                <input type="submit" name="Submit" value="Buscar Viajes" style="font-color: #333;
-                background-color: #d5d5d5; width: 150px; height: 30px; letter-spacing: .05em; font-weight: bold;                "/>
-                <br>
-                <br>
-                <div id="mapa_ruta" style="width: 1000px; height: 300px; border: 4px solid #333;"></div>
-                <div id="direcciones" style="width: 710px"></div> 
-
+             $row = mysql_fetch_assoc($retval);
+             $viajes = mysql_fetch_assoc($retval2);
+             $drives = mysql_fetch_assoc($retval3);
+             $localidad_usada = mysql_fetch_assoc($retval4);             
+             $km_drives = mysql_fetch_assoc($retval5);
 
 
-                </form> 
-                
-            </div>
+
+              ?>
+
+
+
+
+<div class="container" style="margin-top: 120px">
+    <div class="row">
+
+
+        <div class="col-sm-2 col-md-2">
+
+               <div class="panel panel-primary text-center no-boder">
+                            <div style="background: #F77087" class="panel-footer panel-red back-footer-green">
+                                Destinos más Visitados
+
+                            </div>
+                            <div class="panel-body">
+                                <h3><?php echo $localidad_usada['c']?></h3>
+                            </div>
+
+                        </div>
+
         </div>
+
+
     </div>
+</div>
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
