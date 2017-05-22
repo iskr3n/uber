@@ -1,10 +1,53 @@
 <?php
    session_start();
    if ($_SESSION["username"]=='') {
-    header('Location: index.html');
+    header('Location: error.html');
    }
 
 ?>
+
+
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+            $sql2 = "select count(*) c from VIAJE where email_conduc like '$ses'";
+            $sql3 = "select count(*) c from VIAJE where email_cli like '$ses'";
+            $sql4 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_conduc like '$ses'";
+            $sql5 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_cli like '$ses'";
+            $sql6 = "select email from PERSONA where email like '$ses' && imagen IS NOT NULL";
+
+            $retval = mysql_query( $sql, $con );
+            $retval2 = mysql_query( $sql2, $con );
+            $retval3 = mysql_query( $sql3, $con );
+            $retval4 = mysql_query( $sql4, $con );
+            $retval5 = mysql_query( $sql5, $con );
+            $retval6 = mysql_query( $sql6, $con );
+
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
+
+             $row = mysql_fetch_assoc($retval);
+             $viajes = mysql_fetch_assoc($retval2);
+             $drives = mysql_fetch_assoc($retval3);
+             $km_viajes = mysql_fetch_assoc($retval4);
+             $km_drives = mysql_fetch_assoc($retval5);
+             $imagen_user = mysql_fetch_assoc($retval6);
+
+
+
+              ?>
+
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -29,6 +72,24 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
 
+
+<script>
+    
+    function myImagen() {
+        if ("<?php echo $row['email']?>" == "<?php echo $imagen_user['email']?>") {
+            $("#avatar").hide();
+            $("#foto").show();
+        }else{
+            $("#avatar").show();
+            $("#foto").hide();
+            }
+
+    }
+
+
+
+
+</script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -36,7 +97,7 @@
     <![endif]-->
 </head>
 <!--END HEAD SECTION -->
-<body>
+<body onload="myImagen()">
     <!-- NAV SECTION -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -62,43 +123,6 @@
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
 
-    <?php
-            $db_host='bbdd.dlsi.ua.es';
-            $db_user='gi_im23';
-            $db_pwd='.im23.';
-            $database='gi_uber';
-            $con=mysql_connect($db_host,$db_user,$db_pwd);
-
-            if(!$con)
-                die("No puede conectar a la BD");
-            if(!mysql_select_db($database))
-                die("No puede conectar a la BD");
-            $ses =  $_SESSION['username'];
-            $sql = "SELECT * from PERSONA where email like '$ses'";
-            $sql2 = "select count(*) c from VIAJE where email_conduc like '$ses'";
-            $sql3 = "select count(*) c from VIAJE where email_cli like '$ses'";
-            $sql4 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_conduc like '$ses'";
-            $sql5 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_cli like '$ses'";
-
-            $retval = mysql_query( $sql, $con );
-            $retval2 = mysql_query( $sql2, $con );
-            $retval3 = mysql_query( $sql3, $con );
-            $retval4 = mysql_query( $sql4, $con );
-            $retval5 = mysql_query( $sql5, $con );
-
-               if(! $retval ) {
-                  die('Could not get data: ' . mysql_error());
-               }
-
-             $row = mysql_fetch_assoc($retval);
-             $viajes = mysql_fetch_assoc($retval2);
-             $drives = mysql_fetch_assoc($retval3);
-             $km_viajes = mysql_fetch_assoc($retval4);
-             $km_drives = mysql_fetch_assoc($retval5);
-
-
-
-              ?>
 
 
 
@@ -119,7 +143,10 @@
 
         </div>
         <div class="col-sm-3 col-md-3">
-            <img style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            
+            <img id="avatar" style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+            <?php   echo '<img id="foto" src="data:image/jpeg;base64,'.base64_encode($row['imagen']). '" width="290" height="290">' . "</dd>"; ?>
+     
             <blockquote style="margin-top: 20px">
                 <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p>
                 <cite>Direccion</cite>
