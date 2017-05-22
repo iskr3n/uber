@@ -25,7 +25,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                <li><a href="">ESTADISTICAS</a></li>
+                <li><a href="transacciones.php">TRANSACCIONES</a></li>
                 <li><a href="documento.xml">EXTRAER XML</a></li>
                 <li><a href="index.html">CERRAR SESIÓN</a></li>
                 </ul>
@@ -38,11 +38,33 @@
 
 <br>
 <br>
-
+<br>
+<br>
 
 
 
 <body>
+<div class="container">
+  <table class="table table-hover table-responsive">
+   <thead>
+      <tr>
+      <th><h2>Información del catálogo</h2></th>
+     </tr>
+  
+     </thead>
+     <tbody>
+<tr> <td> <a href="InformacionBD.php"><pre>&nbsp;&nbsp;Información gi_uber <span class="badge">1</span></a><br></td></tr>
+ <tr> <td> <a href="tablasBD.php"><pre>&nbsp;&nbsp;Información por tablas <span class="badge">9</span></a><br></td></tr>
+ <tr> <td> <a href="disparadores.php"><pre>&nbsp;&nbsp;Información por disparador <span class="badge">2</span></a><br></td></tr>
+ <tr> <td> <a href="rutinas.php"><pre>&nbsp;&nbsp;Información por rutina <span class="badge">3</span></a><br></td></tr>
+ <tr> <td> <a href="indices.php"><pre>&nbsp;&nbsp;Visualizar índices<span class="badge">0</span></a><br></td></tr>
+
+  </pre>
+
+</tbody>
+
+</table>
+</div>
 <div class="container">
   <table class="table table-hover table-responsive">
    <thead>
@@ -52,20 +74,20 @@
   
      </thead>
      <tbody>
-<tr> <td> <a href="InformacionBD.php"><pre>&nbsp;&nbsp;Información gi_uber <span class="badge">1</span></a><br></td></tr>
- <tr> <td> <a href="tablasBD.php"><pre>&nbsp;&nbsp;Información por tablas <span class="badge">9</span></a><br></td></tr>
- <tr> <td> <a href="disparadores.php"><pre>&nbsp;&nbsp;Información por disparador <span class="badge">2</span></a><br></td></tr>
- <tr> <td> <a href="rutinas.php"><pre>&nbsp;&nbsp;Información por rutina <span class="badge">3</span></a><br></td></tr>
-  <tr> <td> <a href="transacciones.php"><pre>&nbsp;&nbsp;Visualizar transacciones <span class="badge">0</span></a><br></td></tr>
- <tr> <td> <a href="indices.php"><pre>&nbsp;&nbsp;Visualizar índices<span class="badge">0</span></a><br></td></tr>
  <tr> <td> <a href="direcciones.php"><pre>&nbsp;&nbsp;Ver direcciones registradas<span class="badge">14</span></a><br></td></tr>
+ <tr> <td> <a href="vista_viajero.php"><pre>&nbsp;&nbsp;Ver usuario más viajero<span class="badge">1</span></a><br></td></tr>
+ <tr> <td> <a href="vista_conductor.php"><pre>&nbsp;&nbsp;Ver usuario más conductor<span class="badge">1</span></a><br></td></tr>
+ <tr> <td> <a href="vista_coches.php"><pre>&nbsp;&nbsp;Usuario con más coches<span class="badge">1</span></a><br></td></tr>
+ <tr> <td> <a href="vista_tipo.php"><pre>&nbsp;&nbsp;Tipo de coche más utilizado<span class="badge">1</span></a><br></td></tr>
+ <tr> <td> <a href="vista_conductoresclientes.php"><pre>&nbsp;&nbsp;Usuarios conductores y viajeros a la vez <span class="badge">4</span></a><br></td></tr>
+ <tr> <td> <a href="vista_viajeros_masdosveces.php"><pre>&nbsp;&nbsp;Clientes que han viajado más de dos veces <span class="badge">3</span></a><br></td></tr>
+ <tr> <td> <a href="vista_conductores_masdosveces.php"><pre>&nbsp;&nbsp;Conductores que han realizado más de dos viajes <span class="badge">2</span></a><br></td></tr>
   </pre>
 
 </tbody>
 
 </table>
 </div>
-
 
 </body>
 </html>

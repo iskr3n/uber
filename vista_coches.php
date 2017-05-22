@@ -1,3 +1,4 @@
+ 
 <?php 
 include "conectarBD.php";
 ?>
@@ -43,40 +44,28 @@ include "conectarBD.php";
 <body>
 
 <div class="table table-hover table-responsive">
-  <h2>Información de las transacciones</h2>
+  <h2>Información usuario con más coches registrados</h2>
   
  <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-sm-1">Email conductor</th>
-        <th class="col-sm-1">Email cliente</th>
-        <th class="col-sm-1">Fecha</th>
-        <th class="col-sm-1">Cuota conductor</th>
-        <th class="col-sm-1">Gastos gestión</th>
-         <th class="col-sm-1">Estado del pago</th>
+        <th class="col-sm-1">Email del conductor</th>
       </tr>
     </thead>
     <tbody>
-    </thead>
-       <tbody>
      <?php 
       $conexion= ConectarBD();
-      $sql = "SELECT cuota_conductor, gastos_gestion, estado_pago, fecha, email_conduc, email_cli
-FROM TRANSACCIONES;";
+      $sql = "select * 
+                            from usuario_mas_coches;";
       $result = mysqli_query($conexion, $sql);
-      $row= mysqli_fetch_array($result);
-          while($row= mysqli_fetch_array($result)){
+     $row= mysqli_fetch_array($result);
     ?>
      <tr>
           <td ><pre><?php echo $row['email_conduc'];?></td></pre>
-          <td ><pre><?php echo $row['email_cli'];?></td></pre>
-          <td ><pre><?php echo $row['fecha'];?></td></pre>
-          <td ><pre><?php echo $row['cuota_conductor'];?></td></pre>
-          <td ><pre><?php echo $row['gastos_gestion']."euros";?></td></pre>
-          <td ><pre><?php echo $row['estado_pago'];?></td></pre>
       </tr>
       <?php 
-    }
+          
+
           mysqli_close($conexion);
       ?>
   </table>
