@@ -148,7 +148,7 @@
     <h2 class="well">Modificar datos</h2>
     <div class="col-lg-12 well">
     <div class="row">
-                <form name="register-user" action="mod_persona.php" method="post">
+                <form enctype="multipart/form-data" name="register-user" action="mod_persona.php" method="post">
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-4 form-group">
@@ -201,7 +201,7 @@
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Subir una foto</label>
-                              </span><input name="image" type="file" value="imagen"/></span>
+                              </span><input name="imagen" type="file" value="imagen"/></span>
                             </div>
                         </div>
                     <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
