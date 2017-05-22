@@ -114,7 +114,7 @@
         <h2 class="well">Registrar</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" action="registerBD.php" method="post">
+                    <form enctype="multipart/form-data" name="register-user" action="registerBD.php" method="post">
                         <div class="col-sm-12">
                             <div class="form-group">
                                 <!--<?php if (false) {
@@ -174,7 +174,7 @@
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Subir una foto</label>
-                                    </span><input name="image" type="file" /></span>
+                                    </span><input id="imagen" name="imagen" type="file" /></span>
                                 </div>
                             </div>
                         <button type="submit" name="button_registro" class="btn btn-lg btn-info">Registrar</button>

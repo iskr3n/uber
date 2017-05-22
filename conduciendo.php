@@ -1,3 +1,33 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='') {
+   }
+
+?>
+
+    <?php
+            $db_host='bbdd.dlsi.ua.es';
+            $db_user='gi_im23';
+            $db_pwd='.im23.';
+            $database='gi_uber';
+            $con=mysql_connect($db_host,$db_user,$db_pwd);
+
+            if(!$con)
+                die("No puede conectar a la BD");
+            if(!mysql_select_db($database))
+                die("No puede conectar a la BD");
+            $ses =  $_SESSION['username'];
+            $sql = "SELECT * from PERSONA where email like '$ses'";
+
+            $retval = mysql_query( $sql, $con );
+
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
+
+             $row = mysql_fetch_assoc($retval);
+         
+              ?>
 
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
@@ -18,15 +48,42 @@
     <title>Uber</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-    <!--BOOTSTRAP MAIN STYLES -->
     <link href="assets/css/bootstrap.css" rel="stylesheet" />
-    <!--FONTAWESOME MAIN STYLE -->
     <link href="assets/css/font-awesome.min.css" rel="stylesheet" />
-    <!--SLIDER CSS CLASES -->
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
-    <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
 
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCIEBL3NZApu3jQATlUMvO-hZ5KTVvHXkI&callback=myMap" type="text/javascript"></script>
+
+<script>
+function myMap() {
+  var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: {lat: 40.415363, lng: -3.707398}
+        });
+        var geocoder = new google.maps.Geocoder();
+
+          geocodeAddress(geocoder, map);
+        
+}
+
+function geocodeAddress(geocoder, resultsMap) {
+
+		var city="<?php echo $row['direccion']?> <?php echo $row['localidad']?>";
+        geocoder.geocode({'address': city}, function(results, status) {
+          if (status === 'OK') {
+            resultsMap.setCenter(results[0].geometry.location);
+            var marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+}
+</script>
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -34,7 +91,7 @@
     <![endif]-->
 </head>
 <!--END HEAD SECTION -->
-<body>
+<body onload="myMap()" onunload="GUnload()">
     <!-- NAV SECTION -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -48,9 +105,11 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                  <li><a>CONDUCIR</a></li>
-                  <li><a href="modificar_con.php">DATOS PERSONALES</a></li>
-                  <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                     <li><a href="comprobar_cliente.php">VIAJAR</a></li>
+                    <li><a href="comprobar_conductor.php">CONDUCIR</a></li>
+                    <li><a href="conducir.php">CONDUCIR</a></li>
+                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
                 </ul>
             </div>
 
@@ -60,38 +119,14 @@
     <!-- HOME SECTION -->
 
 
-    <h2>Iniciar sesión</h2>
 
+<div class="container" style="margin-top: 120px">
+      <input id="submit" type="button" value="Geocode">
+      <?php echo $row['localidad']?>
+<div id="map" style="width:100%;height:400px;"></div>
 
-    <div class = "container form-signin">
-
-    </div> <!-- /container -->
-
-    <div class = "container">
-
-       <form class = "form-signin" role = "form"
-          action="login.php" method = "post">
-          <h4 class = "form-signin-heading" style ='color: red'><?php echo $msg; ?></h4>
-          <input type = "text" class = "form-control"
-             name = "username" placeholder = "Email"
-             required></br>
-          <input type = "password" class = "form-control"
-             name = "password" placeholder = "Contraseña" required>
-          <button class = "btn btn-lg btn-primary btn-block" type = "submit"
-             name = "login">Login</button>
-             ¿No tienes una cuenta? <a href = "register.php" tite = "Registrar">Regístrate
-       </a>
-
-       </form>
-
-       Click here to clean <a href = "logout.php" tite = "Logout">Session.
-       </a>
-    </div>
-
-
-
-
-  <div class="space-bottom"></div>
+</div>
+    <div class="space-bottom"></div>
     <!--END HOME SECTION -->
     <!--FOOTER SECTION -->
 
