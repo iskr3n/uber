@@ -24,12 +24,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $equipaje = $_POST["equipaje"];
   $plaza = $_POST["plaza"];
   $tipo = $_POST["tipo"];
-    $foto= $_FILES["imagen"]["tmp_name"];
+  $foto= $_FILES["imagen"]["tmp_name"];
   $nombrefoto  = $_FILES["foto"]["name"];
 //este es el archivo que añadiremosal campo blob
-  $foto  = $_FILES['imagen']['tmp_name'];
+  $foto  = $_FILES["imagen"]["tmp_name"];
   //lo comvertimos en binario antes de guardarlo
-       $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
+  $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
 
 
   //Email que hay que coger de la session_start
@@ -187,7 +187,7 @@ function test_input($data) {
         <h2 class="well">Registrar coche</h2>
         <div class="col-lg-12 well">
         <div class="row">
-                    <form name="register-user" action="anyadir_coche.php" method="post">
+                    <form enctype="multipart/form-data" name="register-coche" action="anyadir_coche.php" method="post">
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-4 form-group">
