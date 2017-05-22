@@ -244,7 +244,7 @@
               <div class="row">
                   <div class="col-sm-6 form-group">
                       <label>Subir una foto</label>
-                    </span><input name="image" type="file" value="<?php echo $row['imagen']?>"/></span>
+                    </span><input name="image" type="file" /></span>
                   </div>
               </div>
 

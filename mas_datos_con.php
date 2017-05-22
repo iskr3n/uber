@@ -19,32 +19,13 @@
             if(!mysql_select_db($database))
                 die("No puede conectar a la BD");
             $ses =  $_SESSION['username'];
-            $sql = "SELECT * from PERSONA where email like '$ses'";
-            $sql2 = "select count(*) c from VIAJE where email_conduc like '$ses'";
-            $sql3 = "select count(*) c from VIAJE where email_cli like '$ses'";
-            $sql4 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_conduc like '$ses'";
-            $sql5 = "select COALESCE(sum(distancia_estimada),0) c from VIAJE where email_cli like '$ses'";
-            $sql6 = "select email from PERSONA where email like '$ses' && imagen IS NOT NULL";
-
+                  $sql = "select email_cli, origen_direccion, origen_localidad, destino_direccion, destino_localidad, distancia_estimada, tiempo_estimado
+ from VIAJE where email_conduc like '$ses' && estado like 'FINALIZADO'";
             $retval = mysql_query( $sql, $con );
-            $retval2 = mysql_query( $sql2, $con );
-            $retval3 = mysql_query( $sql3, $con );
-            $retval4 = mysql_query( $sql4, $con );
-            $retval5 = mysql_query( $sql5, $con );
-            $retval6 = mysql_query( $sql6, $con );
-
+            
                if(! $retval ) {
                   die('Could not get data: ' . mysql_error());
                }
-
-             $row = mysql_fetch_assoc($retval);
-             $viajes = mysql_fetch_assoc($retval2);
-             $drives = mysql_fetch_assoc($retval3);
-             $km_viajes = mysql_fetch_assoc($retval4);
-             $km_drives = mysql_fetch_assoc($retval5);
-             $imagen_user = mysql_fetch_assoc($retval6);
-
-
 
               ?>
 
@@ -72,32 +53,14 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <link href="assets/css/style.css" rel="stylesheet" />
 
-
-<script>
-    
-    function myImagen() {
-        if ("<?php echo $row['email']?>" == "<?php echo $imagen_user['email']?>") {
-            $("#avatar").hide();
-            $("#foto").show();
-        }else{
-            $("#avatar").show();
-            $("#foto").hide();
-            }
-
-    }
-
-
-
-
-</script>
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
 </head>
 <!--END HEAD SECTION -->
-<body onload="myImagen()">
+<body>
     <!-- NAV SECTION -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -126,87 +89,39 @@
 
 
 
-
-<div class="container" style="margin-top: 120px">
-    <div class="row">
-        <div class="col-sm-2 col-md-2">
-            <div><a href="viajar.html">
-            <img src="http://icons.iconarchive.com/icons/icons-land/vista-map-markers/256/Map-Marker-Marker-Outside-Chartreuse-icon.png" alt="" class="img-rounded img-responsive" /></a>
-            <h3 style="text-align: center;">VIAJAR</h3>
-            </div>
-            <div><a href="conducir.php">
-            <img src="http://www.jcsdrivingschool.com.au/assets/images/icon-defensive-driving.png" alt="" class="img-rounded img-responsive" /></a>
-            <h3 style="text-align: center;">CONDUCIR</h3>
-            </div>
-        </div>
-        <div class="col-sm-1 col-md-1">
-
-        </div>
-        <div class="col-sm-3 col-md-3">
-
+<div class="table table-hover table-responsive" style="margin-top: 100px;">
+  <h2 style="text-align: center;">Viajes realizados como conductor</h2>
+  
+ <table class="table table-hover">
+    <thead>
+      <tr>
+        <th class="col-sm-1">Email cliente</th>
+        <th class="col-sm-1">Origen</th>
+        <th class="col-sm-1">Destino</th>
+        <th class="col-sm-1">Distancia</th>
+        <th class="col-sm-1">Tiempo</th>
+      </tr>
+    </thead>
+    <tbody>
+     <?php 
             
-            <img id="avatar" style="height: 300px; width: 300px" src="https://www.bythewayers.com/images/default-user.png" alt="" class="img-rounded img-responsive" />
-            <?php   echo '<img id="foto" class="img-rounded img-responsive" src="data:image/jpeg;base64,'.base64_encode($row['imagen']). '" width="290" height="290">' . "</dd>"; ?>
 
-            <blockquote style="margin-top: 20px">
-                <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p>
-                <cite>Direccion</cite>
-                <small><cite title="Direccion"><?php echo $row['direccion']?>,<?php echo $row['localidad']?>, <?php echo $row['provincia']?>  <i class="glyphicon glyphicon-map-marker"></i></cite></small>
-                <cite>Telefono</cite>
-                <small><cite title="Telefono"><?php echo $row['movil']?>  <i class="glyphicon-envelope"></i></cite></small>
-                <cite>Cumpleaños</cite>
-                <small><cite title="Telefono"><?php echo $row['f_nacimiento']?> <i class="glyphicon glyphicon-gift"></i> </cite></small>
-            </blockquote>
-        </div>
-        <div class="col-sm-2 col-md-2"></div>
-        <div class="col-sm-2 col-md-2">
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3><?php echo $viajes['c']?></h3>
-                            </div>
-                            <div class="panel-footer back-footer-green">
-                                Viajes Pasajero
-
-                            </div>
-                        </div>
-               <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3><?php echo $km_viajes['c']?></h3>
-                            </div>
-                            <div style="background: #F77087" class="panel-footer panel-red back-footer-green">
-                                Km Pasajero
-
-                            </div>
-                        </div>
-                <a href="mas_datos_cli.php"><div class="panel panel-primary text-center no-boder" style="background-color: #F77087; padding: 15px 0; border: 3px solid red ; height: 50px">
-                    Más Datos
-                </div></a>
-        </div>
-
-        <div class="col-sm-2 col-md-2">
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3><?php echo $drives['c']?></h3>
-                            </div>
-                            <div class="panel-footer back-footer-green">
-                                Viajes Conductor
-
-                            </div>
-                        </div>
-                <div class="panel panel-primary text-center no-boder">
-                            <div class="panel-body">
-                                <h3><?php echo $km_drives['c']?></h3>
-                            </div>
-                            <div style="background: #7E63C3" class="panel-footer panel-blue back-footer-green">
-                                Km Conductor
-                            </div>
-                        </div>
-                <a href="mas_datos_con.php"><div class="panel panel-primary text-center no-boder" style="background-color: #7E63C3; padding: 15px 0; border: 3px solid blue ; height: 50px">
-                    Más Datos</a>
-                </div>
-        </div>
-    </div>
-</div>
+        while($row= mysql_fetch_array($retval)){
+    ?>
+     <tr>
+          <td ><pre><?php echo $row['email_cli'];?></td></pre>
+          <td ><pre><?php echo $row['origen_direccion'].", ";?><?php echo $row['origen_localidad'];?></td></pre>
+          <td ><pre><?php echo $row['destino_direccion'].", ";?><?php echo $row['destino_localidad'];?></td></pre>
+          <td ><pre><?php echo $row['distancia_estimada']." kilometros";?></td></pre>
+          <td ><pre><?php echo $row['tiempo_estimado']." minutos";?></td></pre>
+      </tr>
+      <?php 
+    }
+          mysql_close($con);
+      ?>
+  </table>
+  </div>
+        
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->

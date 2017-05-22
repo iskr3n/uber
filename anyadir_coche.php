@@ -23,8 +23,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $anyo = $_POST["anyo"];
   $equipaje = $_POST["equipaje"];
   $plaza = $_POST["plaza"];
-  $imagen = $_POST["imagen"];
   $tipo = $_POST["tipo"];
+    $foto= $_FILES["imagen"]["tmp_name"];
+  $nombrefoto  = $_FILES["foto"]["name"];
+//este es el archivo que añadiremosal campo blob
+  $foto  = $_FILES['imagen']['tmp_name'];
+  //lo comvertimos en binario antes de guardarlo
+       $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
+
 
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
@@ -43,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       die("No puede conectar a la BD");
 
   $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
-   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
+   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', '$foto', '$ses', '$tipo')";
   //$retval = var_dump($sql);die();
   $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
@@ -226,7 +232,7 @@ function test_input($data) {
 
                                   <div class="col-sm-8 form-group">
                                     <label>Subir una foto</label>
-                                    </span><input name="imagen" type="file" /></span>
+                                    </span><input id="imagen" name="imagen" type="file" /></span>
                                   </div>
 
 
