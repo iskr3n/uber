@@ -3,6 +3,21 @@
 ?>
 
          <?php
+
+         class Encrypter {
+ 
+          private static $Key = "dublin";
+       
+          public static function encrypt ($input) {
+              $output = base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, md5(Encrypter::$Key), $input, MCRYPT_MODE_CBC, md5(md5(Encrypter::$Key))));
+              return $output;
+          }
+       
+          public static function decrypt ($input) {
+              $output = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, md5(Encrypter::$Key), base64_decode($input), MCRYPT_MODE_CBC, md5(md5(Encrypter::$Key))), "\0");
+              return $output;
+          }
+         }
             $db_host='bbdd.dlsi.ua.es';
             $db_user='gi_im23';
             $db_pwd='.im23.';
@@ -29,14 +44,13 @@
              $user_mydb = '';
              $pass_mydb = '';
             while($row = mysql_fetch_array($retval, MYSQL_ASSOC)) {
-                    if($_POST['username'] == $row['email'] && $_POST['password'] == $row['contrasenya']){
+                    if($_POST['username'] == $row['email'] && Encrypter::encrypt($_POST['password']) == $row['contrasenya']){
                        $user_mydb = $row['email'];
                        $pass_mydb = $row['contrasenya'];
                     }
                     }
 
-               if ($_POST['username'] == $user_mydb &&
-                  $_POST['password'] == $pass_mydb) {
+               if ($_POST['username'] == $user_mydb && Encrypter::encrypt($_POST['password']) == $pass_mydb) {
                   $_SESSION['valid'] = true;
                   $_SESSION['timeout'] = time();
                   $_SESSION['username'] = $user_mydb;
