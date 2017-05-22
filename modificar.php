@@ -22,7 +22,7 @@
     <!--[if IE]>
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
         <![endif]-->
-    <title>Bootstrap Mutipager Template - Maxop</title>
+    <title>Uber</title>
     <!--GOOGLE FONT -->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
     <!--BOOTSTRAP MAIN STYLES -->
@@ -201,7 +201,7 @@
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Subir una foto</label>
-                              </span><input name="image" type="file" value="<?php echo $row['imagen']?>"/></span>
+                              </span><input name="image" type="file" value="imagen"/></span>
                             </div>
                         </div>
                     <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
