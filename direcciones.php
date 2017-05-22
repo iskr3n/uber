@@ -1,3 +1,13 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='admin') {
+    
+   }else{
+   	header('Location: error.html');
+   }
+
+?>
+
 <?php 
 include "conectarBD.php";
 $opcion=filter_input(INPUT_GET,'opcion');

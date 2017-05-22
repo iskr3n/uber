@@ -1,3 +1,12 @@
+<?php
+   session_start();
+   if ($_SESSION["username"]=='admin') {
+    
+   }else{
+    header('Location: error.html');
+   }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
