@@ -110,9 +110,10 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>MODIFICAR DATOS</a></li>
                     <li><a href="perfil.php">PERFIL</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
         </div>
