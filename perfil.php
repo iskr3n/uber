@@ -119,7 +119,18 @@
 
         </div>
         <div class="col-sm-3 col-md-3">
+          <?php
+          if($row['imagen'] != "NULL"){
+          ?>
+            <img style="height: 300px; width: 300px" src="<?php echo $row['imagen']?>" alt="" class="img-rounded img-responsive" />
+          <?php
+          } else {
+          ?>
             <img style="height: 300px; width: 300px" src="http://st2.depositphotos.com/1006318/8387/v/950/depositphotos_83874174-stock-illustration-profile-icon-male-hispanic-avatar.jpg" alt="" class="img-rounded img-responsive" />
+          <?php
+          }
+          ?>
+
             <blockquote style="margin-top: 20px">
                 <p><?php echo $row['nombre']?>, <?php echo $row['apellidos']?></p>
                 <cite>Direccion</cite>

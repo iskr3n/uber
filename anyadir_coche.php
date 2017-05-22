@@ -164,6 +164,7 @@ function test_input($data) {
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>AÑADIR COCHE</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
@@ -219,6 +220,7 @@ function test_input($data) {
                                     <option value ="UBER X">UBER X</option>
                                     <option value ="UBER XL">UBER XL</option>
                                     <option value ="UBER BLACK">UBER BLACK</option>
+                                    <option value ="ADAPTADO">ADAPTADO</option>
                                   </select>
                               </div>
 

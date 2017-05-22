@@ -109,6 +109,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>MODIFICAR DATOS CONDUCTOR</a></li>
                     <li><a href="conducir.php">CONDUCIR</a></li>
                     <li><a href="perfil.php">PERFIL</a></li>

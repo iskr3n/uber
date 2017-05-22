@@ -160,6 +160,7 @@ function test_input($data) {
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>REGISTRAR VIAJERO</a></li>
                     <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>

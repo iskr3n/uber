@@ -109,6 +109,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>MODIFICAR DATOS COCHE</a></li>
                     <li><a href="perfil.php">PERFIL</a></li>
                     <li><a href="conducir.php">CONDUCIR</a></li>
@@ -141,13 +142,22 @@
             if(! $retval ) {
                die('Could not get data: ' . mysql_error());
             }
+            //$row = mysql_fetch_assoc($retval);
+    ?>
 
-            $row = mysql_fetch_assoc($retval);
+    <div class="container">
+        <h2 class="well">Modificar datos coche</h2>
+        <div class="col-lg-12 well"></div>
+    </div>
+
+    <?php
+
+            while($row = mysql_fetch_assoc($retval)) {
+
     ?>
 
 
     <div class="container">
-        <h2 class="well">Modificar datos coche</h2>
         <div class="col-lg-12 well">
           <div class="row">
             <form name="register-user" action="mod_coche.php" method="post">
@@ -208,15 +218,23 @@
                       case 'UBER X':
                         echo '<option value ="UBER XL">UBER XL</option>';
                         echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                        echo  '<option value ="ADAPTADO">ADAPTADO</option>';
                         break;
 
                       case 'UBER XL':
                       echo '<option value ="UBER X">UBER X</option>';
                       echo  '<option value ="UBER BLACK">UBER BLACK</option>';
+                      echo  '<option value ="ADAPTADO">ADAPTADO</option>';
                         break;
                       case 'UBER BLACK':
                       echo '<option value ="UBER X">UBER X</option>';
                       echo  '<option value ="UBER XL">UBER XL</option>';
+                      echo  '<option value ="ADAPTADO">ADAPTADO</option>';
+                        break;
+                      case 'ADAPTADO':
+                      echo '<option value ="UBER X">UBER X</option>';
+                      echo  '<option value ="UBER XL">UBER XL</option>';
+                      echo  '<option value ="UBER BLACK">UBER BLACK</option>';
                         break;
                     }
                   ?>
@@ -235,7 +253,9 @@
 
         </div>
       </div>
-
+<?php
+    }
+?>
 
 
         <div class="space-bottom"></div>

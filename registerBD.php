@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $dni = $_POST['dni'];
   $telefono = $_POST['telefono'];
   $contrasenya = $_POST['password'];
+  $imagen = $_POST['imagen'];
   //$email = $_POST['email'];
 
   $db_host='bbdd.dlsi.ua.es';
@@ -19,14 +20,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $database='gi_uber';
   $con=mysql_connect($db_host,$db_user,$db_pwd);
 
+  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
   if(!$con)
       die("No puede conectar a la BD");
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, direccion,
+  $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, imagen, direccion,
           localidad, provincia, cp, dni, movil, contrasenya) VALUES('$email', '$nombre', '$apellidos',
-          '$fecha_nac', '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya')";
+          '$fecha_nac', $imagen, '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya')";
   $retval = mysql_query($sql, $con);
   echo('Insertado correctamente'.$retval);
   header('Location: login.html');

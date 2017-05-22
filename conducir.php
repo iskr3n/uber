@@ -55,6 +55,7 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
+                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
                     <li><a>CONDUCIR</a></li>
                     <li><a href="anyadir_coche.php">AÑADIR COCHE</a></li>
                     <li><a href="modificar_coche.php">MODIFICAR COCHE</a></li>
