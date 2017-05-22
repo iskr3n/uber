@@ -28,6 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $cod_post = $_POST['cp'];
   $dni = $_POST['dni'];
   $telefono = $_POST['telefono'];
+
   $contrasenya = Encrypter::encrypt($_POST['password']);
   $foto= $_FILES["imagen"]["tmp_name"];
   $nombrefoto  = $_FILES["foto"]["name"];
@@ -35,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $foto  = $_FILES['imagen']['tmp_name'];
   //lo comvertimos en binario antes de guardarlo
        $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
-       
+
   //$email = $_POST['email'];
 
   $db_host='bbdd.dlsi.ua.es';
@@ -44,14 +45,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $database='gi_uber';
   $con=mysql_connect($db_host,$db_user,$db_pwd);
 
+  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
   if(!$con)
       die("No puede conectar a la BD");
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
+
   $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, direccion,
           localidad, provincia, cp, dni, movil, contrasenya, imagen) VALUES('$email', '$nombre', '$apellidos',
           '$fecha_nac', '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya', '$foto')";
+
   $retval = mysql_query($sql, $con);
   echo('Insertado correctamente'.$retval);
   header('Location: login.html');

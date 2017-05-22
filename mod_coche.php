@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $anyo = $_POST["anyo"];
   $equipaje = $_POST["equipaje"];
   $plaza = $_POST["plaza"];
-  $imagen = $_POST["imagen"];
+  //$imagen = $_POST["imagen"];
   $tipo = $_POST["tipo"];
 
   //Email que hay que coger de la session_start
@@ -32,10 +32,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
 
-  $sql = "UPDATE VEHICULO SET matricula='$matricula', marca='$marca', modelo='$modelo',
-    anyo='$anyo', equipaje='$equipaje', plaza='$plaza', tipo='$tipo' imagen=$imagen WHERE email='$ses'";
+  //$imagen = !empty($imagen) ? "'$imagen'" : "NULL";
+
+ $sql= "UPDATE VEHICULO SET matricula='$matricula', marca='$marca', modelo='$modelo',
+    anyo='$anyo', equipaje='$equipaje', plaza='$plaza', tipo='$tipo' WHERE email='$ses'";
    //$retval = var_dump($sql);die();
  $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
