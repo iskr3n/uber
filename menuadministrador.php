@@ -35,7 +35,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                 <li><a href="transacciones.php">TRANSACCIONES</a></li>
-                <li><a href="documento.xml">EXTRAER XML</a></li>
+                <li><a href="generarFichero.php">EXTRAER XML</a></li>
                 <li><a href="index.html">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
