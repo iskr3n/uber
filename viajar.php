@@ -1,10 +1,3 @@
-<?php
-   session_start();
-   if ($_SESSION["username"]=='') {
-    header('Location: viajar.html');
-   }
-
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -118,8 +111,7 @@ function onGDirectionsLoad(){
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-
-        <?php
+     <?php
             $db_host='bbdd.dlsi.ua.es';
             $db_user='gi_im23';
             $db_pwd='.im23.';
@@ -133,12 +125,11 @@ function onGDirectionsLoad(){
             $ses =  $_SESSION['username'];
             $sql = "SELECT * from PERSONA where email like '$ses'";
             $sql2 = "
-            SELECT count(destino_direccion) as num_viajes_dir, count(destino_localidad) as num_viajes_loc,destino_direccion, destino_localidad, provincia, 
+            SELECT destino_localidad
             FROM LUGARES, VIAJE 
             WHERE direccion = destino_direccion and destino_localidad=localidad
-            GROUP BY destino_direccion, destino_localidad   
-            ORDER BY destino_direccion DESC 
-            LIMIT 10";
+            GROUP BY destino_direccion, destino_localidad
+            LIMIT 5";
 
 
             $retval = mysql_query( $sql, $con );
@@ -149,8 +140,7 @@ function onGDirectionsLoad(){
                }
 
              $row = mysql_fetch_assoc($retval);
-;
-             $localidad_usada = mysql_fetch_assoc($retval2);             
+            
 
 
 
@@ -159,8 +149,7 @@ function onGDirectionsLoad(){
 
 
 
-
-<div class="container" style="margin-top: 120px">
+    <div class="container" style="margin-top: 120px">
     <div class="row">
 
 
@@ -172,7 +161,19 @@ function onGDirectionsLoad(){
 
                             </div> 
                             <div style="width: 450px" class="panel-body" >
-                                <h3><?php echo $localidad_usada['destino_localidad']?></h3>
+                                <table class="table table-hover">
+                                    <?php
+                                    while($localidad_usada = mysql_fetch_array($retval2)){
+                                    ?>
+                                    <tr>
+                                        <td><pre><?php echo $localidad_usada['destino_localidad'];?></td></pre>
+                                    </tr>
+                                    <?php    
+                                    }
+                                    mysql_close($con);
+                                    ?>
+                                </table>
+                                
                             </div>
 
                 </div>
@@ -211,31 +212,6 @@ function onGDirectionsLoad(){
     </div>
 </div>
 
-
-
-
-
-
-
-
-
-    <div class="container" style="margin-top: 120px">
-        <div class="row">
-
-            <!--<div class="col-sm-3 col-md-3">-->
-
-          </div>
-            <!--<div class="col-sm-12 col-md-12">-->
-
-                <!--<h2 style="">
-                    ¿Dónde quieres ir?
-                </h2> -->
-
-               
-                
-            </div>
-        </div>
-    </div>
 
     <div class="space-bottom"></div>
     <!--END HOME SECTION -->
