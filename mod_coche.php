@@ -74,11 +74,12 @@ if($err) {
 
 
   //$imagen = !empty($imagen) ? "'$imagen'" : "NULL";
-
- $sql= "UPDATE VEHICULO SET matricula='$matricula', marca='$marca', modelo='$modelo',
-    anyo='$anyo', equipaje='$equipaje', plaza='$plaza', tipo='$tipo' WHERE email_conduc='$ses'";
-  //  $retval = var_dump($sql);die();
- $retval = mysql_query($sql, $con);
+  if(!$err) {
+   $sql= "UPDATE VEHICULO SET matricula='$matricula', marca='$marca', modelo='$modelo',
+      anyo='$anyo', equipaje='$equipaje', plaza='$plaza', tipo='$tipo' WHERE email_conduc='$ses'";
+    //  $retval = var_dump($sql);die();
+   $retval = mysql_query($sql, $con);
+  }
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 }

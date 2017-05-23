@@ -41,9 +41,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    $err = true;
    echo '<script language="javascript">alert("El telefono debe tener nueve cifras");</script>';
  }
- if(strlen($cod_post) != 5) {
+ if(strlen($cod_post) != 4) {
    $err = true;
-   echo '<script language="javascript">alert("El código postal debe tener cinco cifras");</script>';
+   echo '<script language="javascript">alert("El código postal esta incorrecto");</script>';
  }
  if (!preg_match("/^[a-zA-Z ]*$/",$nombre)) {
    $err = true;
@@ -105,12 +105,13 @@ if(empty($_FILES["imagen"]["tmp_name"])) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-
-  $sql = "UPDATE PERSONA SET nombre='$nombre', apellidos='$apellidos', f_nacimiento='$fecha_nac',
-    direccion='$direccion', localidad='$ciudad', provincia='$provincia', cp='$cod_post', dni='$dni',
-    movil='$telefono', contrasenya='$contrasenya', imagen=$foto WHERE email='$ses'";
-   //$retval = var_dump($sql);die();
- $retval = mysql_query($sql, $con);
+  if(!$err) {
+    $sql = "UPDATE PERSONA SET nombre='$nombre', apellidos='$apellidos', f_nacimiento='$fecha_nac',
+      direccion='$direccion', localidad='$ciudad', provincia='$provincia', cp='$cod_post', dni='$dni',
+      movil='$telefono', contrasenya='$contrasenya', imagen=$foto WHERE email='$ses'";
+     //$retval = var_dump($sql);die();
+   $retval = mysql_query($sql, $con);
+  }
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 

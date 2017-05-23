@@ -56,9 +56,11 @@ if($err) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, iban)
-   VALUES('$ses', '$fecha_per', '$iban')";
-  $retval = mysql_query($sql, $con);
+  if(!$err) {
+    $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, iban)
+     VALUES('$ses', '$fecha_per', '$iban')";
+    $retval = mysql_query($sql, $con);
+  }
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
   //header('Location: conducir.php');
@@ -191,7 +193,7 @@ if($err) {
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>IBAN</label>
-                                    <input name="iban" type="text" placeholder="ES2234565456789098765344" class="form-control">
+                                    <input name="iban" required type="text" placeholder="ES2234565456789098765344" class="form-control">
                                 </div>
                             </div>
 

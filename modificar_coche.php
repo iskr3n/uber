@@ -163,21 +163,21 @@
           <div class="row">
               <div class="col-sm-4 form-group">
                   <label>Matricula</label>
-                  <input name="matricula" type="text" class="form-control" value="<?php echo $row['matricula']?>">
+                  <input name="matricula" required type="text" class="form-control" value="<?php echo $row['matricula']?>">
               </div>
               <div class="col-sm-4 form-group">
                   <label>Marca</label>
-                  <input name="marca" type="text" class="form-control" value="<?php echo $row['marca']?>">
+                  <input name="marca" required type="text" class="form-control" value="<?php echo $row['marca']?>">
               </div>
               <div class="col-sm-4 form-group">
                   <label>Modelo</label>
-                  <input name="modelo" type="text" class="form-control" value="<?php echo $row['modelo']?>">
+                  <input name="modelo" required type="text" class="form-control" value="<?php echo $row['modelo']?>">
               </div>
           </div>
           <div class="row">
             <div class="col-sm-2 form-group">
                 <label>Año</label>
-                <input name="anyo" type="text" class="form-control" value="<?php echo $row['anyo']?>">
+                <input name="anyo" required type="text" class="form-control" value="<?php echo $row['anyo']?>">
             </div>
             <div class="col-sm-4 form-group">
                 <label>Equipaje</label>
@@ -205,7 +205,7 @@
             </div>
             <div class="col-sm-2 form-group">
                 <label>Plazas</label>
-                <input name="plaza" type="text" class="form-control" value="<?php echo $row['plaza']?>">
+                <input name="plaza" required type="text" class="form-control" value="<?php echo $row['plaza']?>">
             </div>
             <div class="col-sm-4 form-group">
                 <label>Tipo</label>
