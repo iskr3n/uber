@@ -17,8 +17,30 @@
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $iban = $_POST["IBAN"];
+  $iban = $_POST["iban"];
   $fecha_per = $_POST["f_permiso_circu"];
+
+  $err = false;
+
+  $data = array($iban, $fecha_per);
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+              $err = true;
+              echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+              break;
+            }
+        }
+ //VALIDACIONES
+ if (!preg_match("/^[0-9a-zA-Z ]*$/",$iban) || (strlen($iban) != 24)) {
+   $err = true;
+  echo '<script language="javascript">alert("El campo IBAN debe contener 2 letras y 22 cifras");</script>';
+ }
+
+if($err) {
+  echo "<script>setTimeout(\"location.href = '/uber/register_con.php';\",0);</script>";
+} else {
+  echo "<script>setTimeout(\"location.href = '/uber/conducir.php';\",0);</script>";
+}
 
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
@@ -34,25 +56,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, iban)
-   VALUES('$ses', '$fecha_per', '$iban')";
-  $retval = mysql_query($sql, $con);
+  if(!$err) {
+    $sql = "INSERT INTO CONDUCTOR(email, f_permiso_circu, iban)
+     VALUES('$ses', '$fecha_per', '$iban')";
+    $retval = mysql_query($sql, $con);
+  }
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: conducir.php');
+  //header('Location: conducir.php');
 
-  $data = array($iban, $fecha_per);
-  test_input($data);
-}
-
-function test_input($data) {
-
-  foreach ($data as $key => $value) {
-      if (empty($value)) {
-        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
-        return;
-      }
-  }
 }
 
 //header('Location: conducir.html');
@@ -177,11 +189,11 @@ function test_input($data) {
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="text" placeholder="2010-06-17"  class="form-control">
+                                    <input name="f_permiso_circu" required type="date" placeholder="2010-06-17"  class="form-control">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>IBAN</label>
-                                    <input name="IBAN" type="text" placeholder="ES2234565456789098765344" class="form-control">
+                                    <input name="iban" required type="text" placeholder="ES2234565456789098765344" class="form-control">
                                 </div>
                             </div>
 

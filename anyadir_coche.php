@@ -1,7 +1,7 @@
 <?php
    session_start();
    if ($_SESSION["username"]=='') {
-    header('Location: error.html');
+    header('Location: index.html');
    }
 
 ?>
@@ -32,6 +32,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
 
 
+  $err = false;
+
+  $data = array($matricula, $marca, $modelo, $anyo, $plaza);
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+              $err = true;
+              echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+              break;
+            }
+        }
+ //VALIDACIONES
+  if (!preg_match("/^[0-9a-zA-Z ]*$/",$matricula) || (strlen($matricula) != 7)) {
+    $err = true;
+   echo '<script language="javascript">alert("Matricula debe tener 4 cifras y 3 letras");</script>';
+  }
+  if (!preg_match("/^[a-zA-Z ]*$/",$marca)) {
+    $err = true;
+   echo '<script language="javascript">alert("Marca solo puede contener letras");</script>';
+  }
+  if (!preg_match("/^[0-9a-zA-Z ]*$/",$modelo) ) {
+    $err = true;
+   echo '<script language="javascript">alert("El campo modelo no es correcto");</script>';
+  }
+  if(strlen($anyo) != 4) {
+    $err = true;
+    echo '<script language="javascript">alert("El año debe tener 4 cifras");</script>';
+  }
+
+
+if($err) {
+  echo "<script>setTimeout(\"location.href = '/uber/anyadir_coche.php';\",0);</script>";
+} else {
+  echo "<script>setTimeout(\"location.href = '/uber/conducir.php';\",0);</script>";
+}
+
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
 
@@ -48,26 +83,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
+<<<<<<< HEAD
+  if(!$err) {
+    $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
+     VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
+    //$retval = var_dump($sql);die();
+    $retval = mysql_query($sql, $con);
+  }
+=======
   $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
    VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', '$foto', '$ses', '$tipo')";
   //$retval = var_dump($sql);die();
   $retval = mysql_query($sql, $con);
+>>>>>>> origin/paula
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: conducir.php');
-
-  $data = array($matricula, $marca, $modelo, $anyo, $equipaje, $plaza, $tipo);
-  test_input($data);
-}
-
-function test_input($data) {
-
-  foreach ($data as $key => $value) {
-      if (empty($value)) {
-        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
-        return;
-      }
-  }
 }
 
 //header('Location: conducir.html');
@@ -166,7 +196,7 @@ function test_input($data) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="perfil.php">UBER</a>
+                <a class="navbar-brand" href="conducir.php">UBER</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
@@ -192,21 +222,21 @@ function test_input($data) {
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Matricula</label>
-                                    <input name="matricula" type="text" placeholder="0000AAA"  class="form-control">
+                                    <input name="matricula" required type="text" placeholder="0000AAA"  class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Marca</label>
-                                    <input name="marca" type="text" placeholder="FORD" class="form-control">
+                                    <input name="marca" required type="text" placeholder="FORD" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Modelo</label>
-                                    <input name="modelo" type="text" placeholder="FOCUS" class="form-control">
+                                    <input name="modelo" required type="text" placeholder="FOCUS" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                               <div class="col-sm-2 form-group">
                                   <label>Año</label>
-                                  <input name="anyo" type="text" placeholder="2000"  class="form-control">
+                                  <input name="anyo" required type="text" placeholder="2000"  class="form-control">
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Equipaje</label>
@@ -218,7 +248,7 @@ function test_input($data) {
                               </div>
                               <div class="col-sm-2 form-group">
                                   <label>Plazas</label>
-                                  <input name="plaza" type="text" placeholder="4" class="form-control">
+                                  <input name="plaza" required type="text" placeholder="4" class="form-control">
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Tipo</label>

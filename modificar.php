@@ -153,49 +153,49 @@
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Nombre</label>
-                                <input name="nombre" type="text" class="form-control" value="<?php echo $row['nombre']?>">
+                                <input name="nombre" required type="text" class="form-control" value="<?php echo $row['nombre']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Apellidos</label>
-                                <input name="apellidos" type="text" class="form-control" value="<?php echo $row['apellidos']?>">
+                                <input name="apellidos" required type="text" class="form-control" value="<?php echo $row['apellidos']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Fecha de nacimiento</label>
-                                <input name="fecha_n" type="text" class="form-control" value="<?php echo $row['f_nacimiento']?>">
+                                <input name="fecha_n" required type="text" class="form-control" value="<?php echo $row['f_nacimiento']?>">
                             </div>
                         </div>
                         <div class="form-group">
                             <label>Dirección</label>
-                            <input name="dir" type="text" class="form-control" value="<?php echo $row['direccion']?>">
+                            <input name="dir" required type="text" class="form-control" value="<?php echo $row['direccion']?>">
                         </div>
                         <div class="row">
                             <div class="col-sm-4 form-group">
                                 <label>Ciudad</label>
-                                <input name="ciudad" type="text" class="form-control" value="<?php echo $row['localidad']?>">
+                                <input name="ciudad" required type="text" class="form-control" value="<?php echo $row['localidad']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Provincia</label>
-                                <input name="prov" type="text" class="form-control" value="<?php echo $row['provincia']?>">
+                                <input name="prov" required type="text" class="form-control" value="<?php echo $row['provincia']?>">
                             </div>
                             <div class="col-sm-4 form-group">
                                 <label>Codigo Postal</label>
-                                <input name="cp" type="text" class="form-control" value="<?php echo $row['cp']?>">
+                                <input name="cp" required type="text" class="form-control" value="<?php echo $row['cp']?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>DNI/NIE/NIF</label>
-                                <input name="dni" type="text" class="form-control" value="<?php echo $row['dni']?>">
+                                <input name="dni" required type="text" class="form-control" value="<?php echo $row['dni']?>">
                             </div>
                             <div class="col-sm-6 form-group">
                                 <label>Telefono</label>
-                                <input name="telefono" type="text" class="form-control" value="<?php echo $row['movil']?>">
+                                <input name="telefono" required type="text" class="form-control" value="<?php echo $row['movil']?>">
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-sm-6 form-group">
                                 <label>Contraseña</label>
-                                <input name="password" type="password" class="form-control" value="<?php echo $row['contrasenya']?>">
+                                <input name="password" required type="password" class="form-control" value="<?php echo $row['contrasenya']?>">
                             </div>
                         </div>
                         <div class="row">
