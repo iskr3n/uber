@@ -27,7 +27,7 @@
                }
 
              $row = mysql_fetch_assoc($retval);
-         
+
               ?>
 
 <!DOCTYPE html>
@@ -66,7 +66,7 @@ function myMap() {
         var geocoder = new google.maps.Geocoder();
 
           geocodeAddress(geocoder, map);
-        
+
 }
 
 function geocodeAddress(geocoder, resultsMap) {
@@ -106,11 +106,12 @@ function geocodeAddress(geocoder, resultsMap) {
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                     <li><a href="comprobar_cliente.php">VIAJAR</a></li>
-                    <li><a href="comprobar_conductor.php">CONDUCIR</a></li>
-                    <li><a href="conducir.php">CONDUCIR</a></li>
-                    <li><a href="modificar.php">MODIFICAR DATOS</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESÓN</a></li>
+                  <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
+                  <li><a>CONDUCIR</a></li>
+                  <li><a href="anyadir_coche.php">AÑADIR COCHE</a></li>
+                  <li><a href="modificar_coche.php">MODIFICAR COCHE</a></li>
+                  <li><a href="modificar_con.php">MODIFICAR DATOS</a></li>
+                  <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
 

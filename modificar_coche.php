@@ -159,8 +159,8 @@
 
     <div class="container">
         <div class="col-lg-12 well">
+          <form name="register-user" action="mod_coche.php" method="post">
           <div class="row">
-            <form name="register-user" action="mod_coche.php" method="post">
               <div class="col-sm-4 form-group">
                   <label>Matricula</label>
                   <input name="matricula" type="text" class="form-control" value="<?php echo $row['matricula']?>">
@@ -250,6 +250,7 @@
 
             <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
           </div>
+        </form>
 
         </div>
       </div>
@@ -262,88 +263,88 @@
     <!--END HOME SECTION -->
     <!--FOOTER SECTION -->
 
-    <div id="footer">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Información :</h4>
-                <p>
-                    Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
-                </p>
+        <div id="footer">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Información :</h4>
+                    <p>
+                        Uber es una aplicacion innovadora mediante cual se puede conseguir un transporte más economico. Con la posibilidad de elegir entre vehiculos de distinto tamaño segun la necesidad. Y por otra parte proporciona una fuente de ingresos para aquellos que les gusta conducir.
+                    </p>
 
-            </div>
-            <div class="col-md-4">
-                <h4>Necesitas ayuda? Contacta con nosotros. </h4>
-                <hr>
-                <form>
-                    <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Nombre">
+                </div>
+                <div class="col-md-4">
+                    <h4>Necesitas ayuda? Contacta con nosotros. </h4>
+                    <hr>
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" required="required" placeholder="Nombre">
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" required="required" placeholder="Email">
+                                </div>
                             </div>
                         </div>
-                        <div class="col-md-6 col-sm-6">
-                            <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Email">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12">
+                                <div class="form-group">
+                                    <textarea name="message" id="message" required="required" class="form-control" rows="3" placeholder="Pregunta"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-primary">Enviar</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-sm-12">
-                            <div class="form-group">
-                                <textarea name="message" id="message" class="form-control" rows="3" placeholder="Pregunta"></textarea>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-primary">Enviar</button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <a href="#"><i class="fa fa-facebook-square fa-3x color-facebook"></i></a>
-                <a href="#"><i class="fa fa-twitter-square fa-3x color-twitter"></i></a>
-                <a href="#"><i class="fa fa-google-plus-square fa-3x color-google-plus"></i></a>
-                <a href="#"><i class="fa fa-linkedin-square fa-3x color-linkedin"></i></a>
-                <a href="#"><i class="fa fa-pinterest-square fa-3x color-pinterest"></i></a>
-                <hr>
-                <p>
-                    Calle Alicante 100,<br>
-                    Alicante, España.<br>
-                    Telefono: +999-333-000<br>
-                    Email: uber@ua.es<br>
-                </p>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <a href="#"><i class="fa fa-facebook-square fa-3x color-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter-square fa-3x color-twitter"></i></a>
+                    <a href="#"><i class="fa fa-google-plus-square fa-3x color-google-plus"></i></a>
+                    <a href="#"><i class="fa fa-linkedin-square fa-3x color-linkedin"></i></a>
+                    <a href="#"><i class="fa fa-pinterest-square fa-3x color-pinterest"></i></a>
+                    <hr>
+                    <p>
+                        Calle Alicante 100,<br>
+                        Alicante, España.<br>
+                        Telefono: +999-333-000<br>
+                        Email: uber@ua.es<br>
+                    </p>
 
-                2017 www.uber.es | All Right Reserved
+                    2017 www.uber.es | All Right Reserved
+                </div>
             </div>
+
+
         </div>
 
-
-    </div>
-
-    <!--END FOOTER SECTION -->
-    <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
-    <!-- CORE JQUERY LIBRARY -->
-    <script src="assets/js/jquery.js"></script>
-    <!-- CORE BOOTSTRAP LIBRARY -->
-    <script src="assets/js/bootstrap.min.js"></script>
-    <!-- SLIDER SCRIPTS LIBRARY -->
-    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
-    <!-- CUSTOM SCRIPT-->
-    <script>
-        $(document).ready(function () {
-            $('#slides').slidesjs({
-                width: 940,
-                height: 528,
-                play: {
-                    active: true,
-                    auto: true,
-                    interval: 4000,
-                    swap: true
-                }
+        <!--END FOOTER SECTION -->
+        <!-- JAVASCRIPT FILES PLACED AT THE BOTTOM TO REDUCE THE LOADING TIME  -->
+        <!-- CORE JQUERY LIBRARY -->
+        <script src="assets/js/jquery.js"></script>
+        <!-- CORE BOOTSTRAP LIBRARY -->
+        <script src="assets/js/bootstrap.min.js"></script>
+        <!-- SLIDER SCRIPTS LIBRARY -->
+        <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
+        <!-- CUSTOM SCRIPT-->
+        <script>
+            $(document).ready(function () {
+                $('#slides').slidesjs({
+                    width: 940,
+                    height: 528,
+                    play: {
+                        active: true,
+                        auto: true,
+                        interval: 4000,
+                        swap: true
+                    }
+                });
             });
-        });
 
-    </script>
+        </script>
 
-</body>
-</html>
+    </body>
+    </html>
