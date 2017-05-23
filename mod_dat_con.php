@@ -47,11 +47,13 @@ if($err) {
       die("No puede conectar a la BD");
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
-
-  $sql = "UPDATE CONDUCTOR SET f_permiso_circu='$f_permiso_circu', iban='$iban'
-   WHERE email='$ses'";
-  // $retval = var_dump($sql);die();
-  $retval = mysql_query($sql, $con);
+      
+  if(!$err) {
+    $sql = "UPDATE CONDUCTOR SET f_permiso_circu='$f_permiso_circu', iban='$iban'
+     WHERE email='$ses'";
+    // $retval = var_dump($sql);die();
+    $retval = mysql_query($sql, $con);
+  }
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 

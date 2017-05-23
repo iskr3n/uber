@@ -1,7 +1,7 @@
 <?php
    session_start();
    if ($_SESSION["username"]=='') {
-    header('Location: error.html');
+    header('Location: index.html');
    }
 
 ?>
@@ -43,11 +43,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
  //VALIDACIONES
- /*if(empty($_POST['contrasenya'])) {
-   echo '<script language="javascript">alert("La contrasenya no debe estar vacía");</script>';
-   $err = true;
- }
-*/
   if (!preg_match("/^[0-9a-zA-Z ]*$/",$matricula) || (strlen($matricula) != 7)) {
     $err = true;
    echo '<script language="javascript">alert("Matricula debe tener 4 cifras y 3 letras");</script>';
@@ -88,10 +83,19 @@ if($err) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
+<<<<<<< HEAD
+  if(!$err) {
+    $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
+     VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
+    //$retval = var_dump($sql);die();
+    $retval = mysql_query($sql, $con);
+  }
+=======
   $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
    VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', '$foto', '$ses', '$tipo')";
   //$retval = var_dump($sql);die();
   $retval = mysql_query($sql, $con);
+>>>>>>> origin/paula
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 }
@@ -218,21 +222,21 @@ if($err) {
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Matricula</label>
-                                    <input name="matricula" type="text" placeholder="0000AAA"  class="form-control">
+                                    <input name="matricula" required type="text" placeholder="0000AAA"  class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Marca</label>
-                                    <input name="marca" type="text" placeholder="FORD" class="form-control">
+                                    <input name="marca" required type="text" placeholder="FORD" class="form-control">
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Modelo</label>
-                                    <input name="modelo" type="text" placeholder="FOCUS" class="form-control">
+                                    <input name="modelo" required type="text" placeholder="FOCUS" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
                               <div class="col-sm-2 form-group">
                                   <label>Año</label>
-                                  <input name="anyo" type="text" placeholder="2000"  class="form-control">
+                                  <input name="anyo" required type="text" placeholder="2000"  class="form-control">
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Equipaje</label>
@@ -244,7 +248,7 @@ if($err) {
                               </div>
                               <div class="col-sm-2 form-group">
                                   <label>Plazas</label>
-                                  <input name="plaza" type="text" placeholder="4" class="form-control">
+                                  <input name="plaza" required type="text" placeholder="4" class="form-control">
                               </div>
                               <div class="col-sm-4 form-group">
                                   <label>Tipo</label>
