@@ -1,13 +1,3 @@
-<?php
-   session_start();
-   if ($_SESSION["username"]=='admin') {
-    
-   }else{
-    header('Location: error.html');
-   }
-
-?>
-
 <?php 
 include "conectarBD.php";
 ?>
@@ -15,7 +5,7 @@ include "conectarBD.php";
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Uber</title>
+  <title>Bootstrap GI_UBER</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -53,40 +43,28 @@ include "conectarBD.php";
 <body>
 
 <div class="table table-hover table-responsive">
-  <h2>Información de las transacciones</h2>
+  <h2>Tipo de coche más usado</h2>
   
  <table class="table table-hover">
     <thead>
       <tr>
-        <th class="col-sm-1">Email conductor</th>
-        <th class="col-sm-1">Email cliente</th>
-        <th class="col-sm-1">Fecha</th>
-        <th class="col-sm-1">Cuota conductor</th>
-        <th class="col-sm-1">Gastos gestión</th>
-         <th class="col-sm-1">Estado del pago</th>
+        <th class="col-sm-1">Tipo</th>
       </tr>
     </thead>
     <tbody>
-    </thead>
-       <tbody>
      <?php 
       $conexion= ConectarBD();
-      $sql = "SELECT cuota_conductor, gastos_gestion, estado_pago, fecha, email_conduc, email_cli
-FROM TRANSACCIONES;";
+      $sql = "select * 
+                            from tipo_mas_utilizado;";
       $result = mysqli_query($conexion, $sql);
-      $row= mysqli_fetch_array($result);
-          while($row= mysqli_fetch_array($result)){
+     $row= mysqli_fetch_array($result);
     ?>
      <tr>
-          <td ><pre><?php echo $row['email_conduc'];?></td></pre>
-          <td ><pre><?php echo $row['email_cli'];?></td></pre>
-          <td ><pre><?php echo $row['fecha'];?></td></pre>
-          <td ><pre><?php echo $row['cuota_conductor'];?></td></pre>
-          <td ><pre><?php echo $row['gastos_gestion']."euros";?></td></pre>
-          <td ><pre><?php echo $row['estado_pago'];?></td></pre>
+          <td ><pre><?php echo $row['tipo'];?></td></pre>
       </tr>
       <?php 
-    }
+          
+
           mysqli_close($conexion);
       ?>
   </table>

@@ -1,10 +1,3 @@
-<?php
-   session_start();
-   if ($_SESSION["username"]=='') {
-    header('Location: error.html');
-   }
-
-?>
 <!DOCTYPE html>
 <!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
 <!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
@@ -13,7 +6,6 @@
 <html lang="en">
 <!--<![endif]-->
 <!-- HEAD SECTION -->
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -33,70 +25,69 @@
     <link href="assets/Slides-SlidesJS-3/examples/playing/css/slider.css" rel="stylesheet" />
     <!--CUSTOM STYLE -->
     <link href="assets/css/style.css" rel="stylesheet" />
-        <style>
-         body {
-            padding-top: 50px;
-            padding-bottom: 0px;
-         }
-
-         .form-signin {
-            max-width: 330px;
-            padding: 15px;
-            margin: 0 auto;
-            color: black;
-         }
-
-         .form-signin .form-signin-heading,
-         .form-signin .checkbox {
-            margin-bottom: 10px;
-         }
-
-         .form-signin .checkbox {
-            font-weight: normal;
-         }
-
-         .form-signin .form-control {
-            position: relative;
-            height: auto;
-            -webkit-box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            box-sizing: border-box;
-            padding: 10px;
-            font-size: 16px;
-         }
-
-         .form-signin .form-control:focus {
-            z-index: 2;
-         }
-
-         .form-signin input[type="email"] {
-            margin-bottom: -1px;
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-            border-color:#017572;
-         }
-
-         .form-signin input[type="password"] {
-            margin-bottom: 10px;
-            border-top-left-radius: 0;
-            border-top-right-radius: 0;
-            border-color:#017572;
-         }
-
-         h2{
-            text-align: center;
-            color: black;
-         }
-      </style>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
+
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&oe=ISO-8859-1;&amp;key=AIzaSyCRy7L6o0UU06-sluTlgHSG40gn2OSKSk0&oe=ISO-8859-1"
+type="text/javascript"></script>
+
+
+
+
+
+
+    <script type="text/javascript">
+
+var map;
+var gdir;
+var geocoder = null;
+var addressMarker;
+
+function initialize() {
+if (GBrowserIsCompatible()) { 
+map = new GMap2(document.getElementById("mapa_ruta"));
+map.addControl(new GLargeMapControl());
+map.addControl(new GMapTypeControl());
+gdir = new GDirections(map, document.getElementById("direcciones"));
+GEvent.addListener(gdir, "load", onGDirectionsLoad);
+GEvent.addListener(gdir, "error", handleErrors);
+
+setDirections("Alicante", "Calpe"); 
+
+}
+} 
+
+function setDirections(fromAddress, toAddress) {
+gdir.load("from: " + fromAddress + " to: " + toAddress);
+}
+
+function handleErrors(){
+if (gdir.getStatus().code == G_GEO_UNKNOWN_ADDRESS)
+alert("Dirección no disponible.\nError code: " + gdir.getStatus().code);
+else if (gdir.getStatus().code == G_GEO_SERVER_ERROR)
+alert("A geocoding or directions request could not be successfully processed, yet the exact reason for the failure is not known.\n Error code: " + gdir.getStatus().code); 
+else if (gdir.getStatus().code == G_GEO_MISSING_QUERY)
+alert("The HTTP q parameter was either missing or had no value. For geocoder requests, this means that an empty address was specified as input. For directions requests, this means that no query was specified in the input.\n Error code: " + gdir.getStatus().code); 
+else if (gdir.getStatus().code == G_GEO_BAD_KEY)
+alert("The given key is either invalid or does not match the domain for which it was given. \n Error code: " + gdir.getStatus().code);
+else if (gdir.getStatus().code == G_GEO_BAD_REQUEST)
+alert("A directions request could not be successfully parsed.\n Error code: " + gdir.getStatus().code); 
+else alert("An unknown error occurred."); 
+}
+
+function onGDirectionsLoad(){ 
+}
+
+</script>
+
+
 </head>
 <!--END HEAD SECTION -->
-<body>
+<body onload="initialize()" onunload="GUnload()">
     <!-- NAV SECTION -->
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
@@ -110,18 +101,17 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a>Hola, <?php echo $_SESSION["username"]; ?></a></li>
-                    <li><a>MODIFICAR DATOS</a></li>
-                    <li><a href="perfil.php">PERFIL</a></li>
-                    <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
+                  <li><a>VIAJAR</a></li>
+                  <li><a href="modificar_via.php">DATOS PERSONALES</a></li>
+                  <li><a style ='color: red' href="logout.php">CERRAR SESIÓN</a></li>
                 </ul>
             </div>
+
         </div>
     </div>
     <!--END NAV SECTION -->
     <!-- HOME SECTION -->
-
-    <?php
+     <?php
             $db_host='bbdd.dlsi.ua.es';
             $db_user='gi_im23';
             $db_pwd='.im23.';
@@ -134,86 +124,93 @@
                 die("No puede conectar a la BD");
             $ses =  $_SESSION['username'];
             $sql = "SELECT * from PERSONA where email like '$ses'";
+            $sql2 = "
+            SELECT destino_localidad
+            FROM LUGARES, VIAJE 
+            WHERE direccion = destino_direccion and destino_localidad=localidad
+            GROUP BY destino_direccion, destino_localidad
+            LIMIT 5";
+
 
             $retval = mysql_query( $sql, $con );
+            $retval2 = mysql_query( $sql2, $con );
 
-            if(! $retval ) {
-               die('Could not get data: ' . mysql_error());
-            }
+               if(! $retval ) {
+                  die('Could not get data: ' . mysql_error());
+               }
 
-            $row = mysql_fetch_assoc($retval);
-    ?>
+             $row = mysql_fetch_assoc($retval);
+            
 
-<div class="container">
-    <h2 class="well">Modificar datos</h2>
-    <div class="col-lg-12 well">
+
+
+
+              ?>
+
+
+
+    <div class="container" style="margin-top: 120px">
     <div class="row">
-                <form enctype="multipart/form-data" name="register-user" action="mod_persona.php" method="post">
-                    <div class="col-sm-12">
-                        <div class="row">
-                            <div class="col-sm-4 form-group">
-                                <label>Nombre</label>
-                                <input name="nombre" required type="text" class="form-control" value="<?php echo $row['nombre']?>">
-                            </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Apellidos</label>
-                                <input name="apellidos" required type="text" class="form-control" value="<?php echo $row['apellidos']?>">
-                            </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Fecha de nacimiento</label>
-                                <input name="fecha_n" required type="text" class="form-control" value="<?php echo $row['f_nacimiento']?>">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Dirección</label>
-                            <input name="dir" required type="text" class="form-control" value="<?php echo $row['direccion']?>">
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-4 form-group">
-                                <label>Ciudad</label>
-                                <input name="ciudad" required type="text" class="form-control" value="<?php echo $row['localidad']?>">
-                            </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Provincia</label>
-                                <input name="prov" required type="text" class="form-control" value="<?php echo $row['provincia']?>">
-                            </div>
-                            <div class="col-sm-4 form-group">
-                                <label>Codigo Postal</label>
-                                <input name="cp" required type="text" class="form-control" value="<?php echo $row['cp']?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>DNI/NIE/NIF</label>
-                                <input name="dni" required type="text" class="form-control" value="<?php echo $row['dni']?>">
-                            </div>
-                            <div class="col-sm-6 form-group">
-                                <label>Telefono</label>
-                                <input name="telefono" required type="text" class="form-control" value="<?php echo $row['movil']?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Contraseña</label>
-                                <input name="password" required type="password" class="form-control" value="<?php echo $row['contrasenya']?>">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-sm-6 form-group">
-                                <label>Subir una foto</label>
-                              </span><input name="imagen" type="file" value="imagen"/></span>
-                            </div>
-                        </div>
-                    <button type="submit" name="button_registro" class="btn btn-lg btn-info">Guardar</button>
-                    </div>
 
-                </form>
+
+        <div class="col-sm-2 col-md-2">
+
+               <div style="width: 450px;" class="panel panel-primary text-center no-boder">
+                           <div style="height: 80px; padding-top: 30px;" class="textodonde" class="panel-footer panel-red back-footer-green">
+                                Destinos más Visitados
+
+                            </div> 
+                            <div style="width: 450px" class="panel-body" >
+                                <table class="table table-hover">
+                                    <?php
+                                    while($localidad_usada = mysql_fetch_array($retval2)){
+                                    ?>
+                                    <tr>
+                                        <td><pre><?php echo $localidad_usada['destino_localidad'];?></td></pre>
+                                    </tr>
+                                    <?php    
+                                    }
+                                    mysql_close($con);
+                                    ?>
+                                </table>
+                                
+                            </div>
+
                 </div>
 
-    </div>
-    </div>
+        </div>
+
+        <div style="padding-left: 350px" class="col-sm-2 col-md-2">
+             <div style="padding-left: 100px;" class="bolamundo">
+                  <p class="textodonde">¿DONDE QUIERES IR?
+                  <img src="http://www.skyonline.es/wp-content/uploads/2014/10/bola-mundo.png" class="bola" width="15%" alt="Responsive image"></p>
+                
+                </div>
+                <br>
+                <form action="#" onsubmit="setDirections(this.from.value, this.to.value); return false" name="form">
+
+                Origen: <input type="text" size="25" id="fromAddress" name="from"/><br><br>
+
+                Destino: <input name="to" type="text" id="toAddress" size="25"/><br>
 
 
+              
+                </select>
+                <br>
+                <input type="submit" name="Submit" value="Buscar Viajes" style="font-color: #333;
+                background-color: #d5d5d5; width: 150px; height: 30px; letter-spacing: .05em; font-weight: bold;                "/>
+                <br>
+                <br>
+                <div id="mapa_ruta" style="width: 650px; height: 300px; border: 4px solid #333;"></div>
+                <div id="direcciones" style="width: 650px"></div> 
+
+
+
+                </form> 
+
+        </div>
+    </div>
+</div>
 
 
     <div class="space-bottom"></div>
@@ -274,6 +271,8 @@
                 2017 www.uber.es | All Right Reserved
             </div>
         </div>
+
+
     </div>
 
     <!--END FOOTER SECTION -->
@@ -282,5 +281,24 @@
     <script src="assets/js/jquery.js"></script>
     <!-- CORE BOOTSTRAP LIBRARY -->
     <script src="assets/js/bootstrap.min.js"></script>
+    <!-- SLIDER SCRIPTS LIBRARY -->
+    <script src="assets/Slides-SlidesJS-3/examples/playing/js/jquery.slides.min.js"></script>
+    <!-- CUSTOM SCRIPT-->
+    <script>
+        $(document).ready(function () {
+            $('#slides').slidesjs({
+                width: 940,
+                height: 528,
+                play: {
+                    active: true,
+                    auto: true,
+                    interval: 4000,
+                    swap: true
+                }
+            });
+        });
+
+    </script>
+
 </body>
 </html>

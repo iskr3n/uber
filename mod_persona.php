@@ -91,7 +91,14 @@ if(empty($_FILES["imagen"]["tmp_name"])) {
   $foto = "'$foto'";
 }
 
-  //Email que hay que coger de la session_start
+  // leemos datos de la foto
+  $foto= $_FILES["imagen"]["tmp_name"];
+  $nombrefoto  = $_FILES["imagen"]["name"];
+ 
+  //este es el archivo temporal
+  $foto  = $_FILES['imagen']['tmp_name'];
+  //leer el archivo temporal en binario
+  $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
   $ses =  $_SESSION['username'];
 
   $db_host='bbdd.dlsi.ua.es';
@@ -105,6 +112,7 @@ if(empty($_FILES["imagen"]["tmp_name"])) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
+<<<<<<< HEAD
   if(!$err) {
     $sql = "UPDATE PERSONA SET nombre='$nombre', apellidos='$apellidos', f_nacimiento='$fecha_nac',
       direccion='$direccion', localidad='$ciudad', provincia='$provincia', cp='$cod_post', dni='$dni',
@@ -115,9 +123,20 @@ if(empty($_FILES["imagen"]["tmp_name"])) {
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 
+=======
+
+  $sql = "UPDATE PERSONA SET nombre='$nombre', apellidos='$apellidos', f_nacimiento='$fecha_nac',
+    direccion='$direccion', localidad='$ciudad', provincia='$provincia', cp='$cod_post', dni='$dni',
+    
+
+  $retval = mysql_query($sql, $con);
+  echo('Insertado correctamente'.$retval);
+  header('Location: perfil.php');
+  $data = array($nombre, $apellidos, $fecha_nac, $direccion, $ciudad, $provincia, $cod_post,
+    $dni, $telefono, $contrasenya, $foto);
+  test_input($data);
+>>>>>>> origin/paula
 }
-
-
 
 //header('Location: conducir.html');
 ?>
