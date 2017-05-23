@@ -156,7 +156,7 @@
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="text" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
+                                    <input name="f_permiso_circu" type="date" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>IBAN</label>

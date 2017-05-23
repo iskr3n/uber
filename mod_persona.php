@@ -19,7 +19,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $dni = $_POST['dni'];
   $telefono = $_POST['telefono'];
   $contrasenya = $_POST['password'];
-  $imagen = $_POST['imagen'];
+
+  $err = false;
+
+  $data = array($nombre, $apellidos, $fecha_nac, $direccion, $ciudad, $provincia,
+        $cod_post, $dni, $telefono, $contrasenya);
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+              $err = true;
+              echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+              break;
+            }
+        }
+ //VALIDACIONES
+ /*if(empty($_POST['contrasenya'])) {
+   echo '<script language="javascript">alert("La contrasenya no debe estar vacía");</script>';
+   $err = true;
+ }
+*/
+ if(strlen($telefono) != 9) {
+   $err = true;
+   echo '<script language="javascript">alert("El telefono debe tener nueve cifras");</script>';
+ }
+ if(strlen($cod_post) != 5) {
+   $err = true;
+   echo '<script language="javascript">alert("El código postal debe tener cinco cifras");</script>';
+ }
+ if (!preg_match("/^[a-zA-Z ]*$/",$nombre)) {
+   $err = true;
+  echo '<script language="javascript">alert("Nombre solo puede contener letras");</script>';
+ }
+
+ if (!preg_match("/^[a-zA-Z ]*$/",$apellidos)) {
+   $err = true;
+  echo '<script language="javascript">alert("Apellidos solo puede contener letras");</script>';
+ }
+ if (!preg_match("/^[a-zA-Z ]*$/",$ciudad)) {
+   $err = true;
+  echo '<script language="javascript">alert("Ciudad solo puede contener letras");</script>';
+ }
+ if (!preg_match("/^[a-zA-Z ]*$/",$provincia)) {
+   $err = true;
+  echo '<script language="javascript">alert("Provincia solo puede contener letras");</script>';
+ }
+
+ if (!preg_match("/^[0-9a-zA-Z ]*$/",$dni) || (strlen($dni) != 9)) {
+   $err = true;
+  echo '<script language="javascript">alert("El campo DNI debe contener 8 cifras y 1 letra");</script>';
+ }
+
+ if (!preg_match("/^[0-9a-zA-Z ]*$/",$direccion) ) {
+   $err = true;
+  echo '<script language="javascript">alert("El campo dirección no es correcto");</script>';
+ }
+
+if($err) {
+  echo "<script>setTimeout(\"location.href = '/uber/modificar.php';\",0);</script>";
+} else {
+  echo "<script>setTimeout(\"location.href = '/uber/perfil.php';\",0);</script>";
+}
+
+if(empty($_FILES["imagen"]["tmp_name"])) {
+  $foto = "NULL";
+} else {
+  $foto= $_FILES["imagen"]["tmp_name"];
+  $nombrefoto  = $_FILES["foto"]["name"];
+  //este es el archivo que añadiremosal campo blob
+  $foto  = $_FILES['imagen']['tmp_name'];
+  //lo comvertimos en binario antes de guardarlo
+  $foto=mysql_real_escape_string(file_get_contents($_FILES["imagen"]["tmp_name"]));
+  $foto = "'$foto'";
+}
 
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
@@ -35,31 +105,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-  $imagen = !empty($imagen) ? "'$imagen'" : "NULL";
 
   $sql = "UPDATE PERSONA SET nombre='$nombre', apellidos='$apellidos', f_nacimiento='$fecha_nac',
     direccion='$direccion', localidad='$ciudad', provincia='$provincia', cp='$cod_post', dni='$dni',
-    movil='$telefono', contrasenya='$contrasenya', imagen=$imagen WHERE email='$ses'";
+    movil='$telefono', contrasenya='$contrasenya', imagen=$foto WHERE email='$ses'";
    //$retval = var_dump($sql);die();
  $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: perfil.php');
 
-  $data = array($nombre, $apellidos, $fecha_nac, $direccion, $ciudad, $provincia, $cod_post,
-    $dni, $telefono, $contrasenya);
-  test_input($data);
 }
 
-function test_input($data) {
 
-  foreach ($data as $key => $value) {
-      if (empty($value)) {
-        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
-        return;
-      }
-  }
-}
 
 //header('Location: conducir.html');
 ?>

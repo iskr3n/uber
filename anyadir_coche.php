@@ -26,6 +26,46 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $imagen = $_POST["imagen"];
   $tipo = $_POST["tipo"];
 
+  $err = false;
+
+  $data = array($matricula, $marca, $modelo, $anyo, $plaza);
+        foreach ($data as $key => $value) {
+            if (empty($value)) {
+              $err = true;
+              echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
+              break;
+            }
+        }
+ //VALIDACIONES
+ /*if(empty($_POST['contrasenya'])) {
+   echo '<script language="javascript">alert("La contrasenya no debe estar vacía");</script>';
+   $err = true;
+ }
+*/
+  if (!preg_match("/^[0-9a-zA-Z ]*$/",$matricula) || (strlen($matricula) != 7)) {
+    $err = true;
+   echo '<script language="javascript">alert("Matricula debe tener 4 cifras y 3 letras");</script>';
+  }
+  if (!preg_match("/^[a-zA-Z ]*$/",$marca)) {
+    $err = true;
+   echo '<script language="javascript">alert("Marca solo puede contener letras");</script>';
+  }
+  if (!preg_match("/^[0-9a-zA-Z ]*$/",$modelo) ) {
+    $err = true;
+   echo '<script language="javascript">alert("El campo modelo no es correcto");</script>';
+  }
+  if(strlen($anyo) != 4) {
+    $err = true;
+    echo '<script language="javascript">alert("El año debe tener 4 cifras");</script>';
+  }
+
+
+if($err) {
+  echo "<script>setTimeout(\"location.href = '/uber/anyadir_coche.php';\",0);</script>";
+} else {
+  echo "<script>setTimeout(\"location.href = '/uber/conducir.php';\",0);</script>";
+}
+
   //Email que hay que coger de la session_start
   $ses =  $_SESSION['username'];
 
@@ -48,20 +88,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $retval = mysql_query($sql, $con);
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
-  header('Location: conducir.php');
-
-  $data = array($matricula, $marca, $modelo, $anyo, $equipaje, $plaza, $tipo);
-  test_input($data);
-}
-
-function test_input($data) {
-
-  foreach ($data as $key => $value) {
-      if (empty($value)) {
-        echo '<script language="javascript">alert("Los campos no deben estar vacios");</script>';
-        return;
-      }
-  }
 }
 
 //header('Location: conducir.html');
@@ -160,7 +186,7 @@ function test_input($data) {
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="perfil.php">UBER</a>
+                <a class="navbar-brand" href="conducir.php">UBER</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">

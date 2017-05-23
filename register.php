@@ -121,7 +121,7 @@
                                   echo('<span>El email es obligatorio</span>');
                                 } ?>-->
                                 <label>Email</label>
-                                <input name="email" type="text" placeholder="example@example.com" class="form-control">
+                                <input  name="email" type="email" placeholder="example@example.com" class="form-control">
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 form-group">
@@ -134,7 +134,7 @@
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Fecha de nacimiento</label>
-                                    <input name="fecha_n" type="text" placeholder="1960-06-01" class="form-control">
+                                    <input name="fecha_n" required type="date" placeholder="1960-06-01" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
@@ -152,7 +152,7 @@
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Codigo Postal</label>
-                                    <input name="cp" type="text" placeholder="03070" class="form-control">
+                                    <input name="cp" type="number" placeholder="03070" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
@@ -162,7 +162,7 @@
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>Telefono</label>
-                                    <input name="telefono" type="text" placeholder="666666666" class="form-control">
+                                    <input name="telefono" type="number" placeholder="666666666" class="form-control">
                                 </div>
                             </div>
                             <div class="row">
