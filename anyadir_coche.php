@@ -83,19 +83,13 @@ if($err) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-<<<<<<< HEAD
   if(!$err) {
     $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
      VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', $imagen, '$ses', '$tipo')";
     //$retval = var_dump($sql);die();
     $retval = mysql_query($sql, $con);
   }
-=======
-  $sql = "INSERT INTO VEHICULO(matricula, marca, modelo, anyo, equipaje, plaza, imagen, email_conduc, tipo)
-   VALUES('$matricula', '$marca', '$modelo', '$anyo', '$equipaje', '$plaza', '$foto', '$ses', '$tipo')";
-  //$retval = var_dump($sql);die();
-  $retval = mysql_query($sql, $con);
->>>>>>> origin/paula
+
   //echo('Insertado correctamente'.$retval);
   //header('Location: login.html');
 }
