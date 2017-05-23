@@ -156,11 +156,11 @@
                             <div class="row">
                                 <div class="col-sm-6 form-group">
                                     <label>Fecha permiso circulación</label>
-                                    <input name="f_permiso_circu" type="date" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
+                                    <input name="f_permiso_circu" required type="date" class="form-control" value="<?php echo $row['f_permiso_circu']?>">
                                 </div>
                                 <div class="col-sm-6 form-group">
                                     <label>IBAN</label>
-                                    <input name="IBAN" type="text" class="form-control" value="<?php echo $row['iban']?>">
+                                    <input name="IBAN" required type="text" class="form-control" value="<?php echo $row['iban']?>">
                                 </div>
                             </div>
                         <button type="submit" name="button_registro" class="btn btn-lg btn-info" value="mod_dat_con.php">Guardar</button>

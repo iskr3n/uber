@@ -120,12 +120,15 @@ if($err) {
   if(!mysql_select_db($database))
       die("No puede conectar a la BD");
 
-
+if(!$err) {
   $sql = "INSERT INTO PERSONA(email, nombre, apellidos, f_nacimiento, direccion,
           localidad, provincia, cp, dni, movil, contrasenya, imagen) VALUES('$email', '$nombre', '$apellidos',
           '$fecha_nac', '$direccion', '$ciudad', '$provincia', '$cod_post', '$dni', '$telefono', '$contrasenya', $foto)";
 
-  $retval = mysql_query($sql, $con);
+          $retval = mysql_query($sql, $con);
+}
+
+  //$retval = mysql_query($sql, $con);
    //header('Location: login.html');
 }
 
